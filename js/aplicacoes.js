@@ -3,7 +3,7 @@
 var App = App || {};
 
 //Apresenta uma aplicação na física
-App.aplicacoes = (function ()
+App.planoInclinado = (function ()
 {  
   var primeiraTela; 
   var objCanvas;
