@@ -1,4 +1,4 @@
-﻿"use strict";
+"use strict";
 
 // Namespace App - centralizando todo o código como um único objeto chamado App
 var App = App || {};
