@@ -6,19 +6,15 @@ let w_canvas = 500
 let h_canvas = 500
 let canvas;
 let ctx;
-let animate;
 let angle;
-let deg;
-let xx;
-let yy;
+let xMax;
 let init_x;
 let init_y;
-let end_x;
 let end_y;
-let end_y_r;
-let end_x_r;
 let flash_light;
 let isStart;
+var BASE;
+var anguloTexto;
 
 //Apresenta uma aplicação na física
 App.espelho = (function ()
@@ -30,19 +26,7 @@ App.espelho = (function ()
   //Função Principal
   var inicio = function ()
   {
-
     isStart = true;
-
-    angle = 0;
-    deg = 0;
-    xx = 0;
-    yy = 0;
-    init_x = 100
-    init_y = 300
-    end_x = 300
-    end_y = 300
-    end_y_r = 0;
-    end_x_r = 0;
 
     canvas = document.getElementById('plot');
     ctx = canvas.getContext('2d');
@@ -50,9 +34,18 @@ App.espelho = (function ()
     //instância de singletonCanvas
     objCanvas = App.singletons.singletonCanvas.getInstancia();
     objImagens = App.singletons.singletonImagens.getInstancia();
- 
+
+    BASE = canvas.width * 2;
+    xMax = canvas.width - 140;
+    angle = 0;
+    init_x = 48;
+    init_y = 300;
+    end_y = 300;
+
     flash_light = objImagens.img["lanterna"];
 
+    anguloTexto = "Ângulo: 0°";
+    document.getElementById("pos-y").value = anguloTexto;
     document.getElementById("divEspelhoControles").style.display = 'block';
     document.getElementById("divControles").style.display = 'block';
 
@@ -104,7 +97,7 @@ App.espelho = (function ()
     App.strategiesTela.construtorImagemFundo.executa([
         "2",
         "espelho",
-        objCanvas.canvasWidth/2 + 175,
+        objCanvas.canvasWidth/2 + 225,
         40,
         231,
         400
@@ -172,7 +165,7 @@ App.espelho = (function ()
 
 
     // Lanterna na posição certa, mais primeiro feixe de luz
-    images(flash_light, 75, 318, deg);
+    images(flash_light, 75, 318, 0);
 
     //-----------------------------------------------------------
     //-----------------------------------------------------------
@@ -183,14 +176,6 @@ App.espelho = (function ()
     };
     document.getElementById("btn-minus").onclick = function() {
       down();
-    };
-    document.getElementById("pos-y").onchange = function() {
-      let last_angle = document.getElementById("pos-y").value;
-      if (parseInt(last_angle) < angle) {
-        down();
-      } else {
-        up();
-      }
     };
     //-----------------------------------------------------------
     //-----------------------------------------------------------
@@ -215,50 +200,40 @@ App.espelho = (function ()
   }
 
   function lines(new_pos, type_pos) {
-    if (type_pos == 'up') {
-      deg = deg - 0.2
-      end_y = end_y - 1
-      end_x_r = end_x - end_x
 
-      if (end_y_r === 0) {
-        end_y_r = end_y
-      }
+    // new_pos é o ângulo em graus padrão do ciclo trigonométrico, em GRAUS
+    // Corrigindo para o canvas -> 360 - new_pos = ângulo para o canvas
 
-      end_y_r = end_y_r - 2.25
-      init_x = (init_x - 0.07)
-      init_y = (init_y - 0.07)
+    var angCorrigidoGraus = 360 - new_pos;
+    var angRad = (Math.PI/180) * angCorrigidoGraus;
 
-    } else {
+    var ponto = App.strategiesCalculadora.ponto.calcula([angRad, init_x, init_y, BASE]);
+    
+    var m = (init_y - ponto[1]) / (init_x - ponto[0]);    
+    var y = init_y + (m * (xMax - init_x));
 
-      deg = deg + 0.2
-      end_y = end_y + 1
-      end_x_r = end_x - end_x
 
-      if (end_y_r === 0) {
-        end_y_r = end_y
-      }
-      
-      end_y_r = end_y_r + 2.25
-      init_x = (init_x + 0.07)
-      init_y = (init_y + 0.07)
-    }
+    var angRefletido = 180 + new_pos;
+    var angRefletidoRad = (Math.PI/180) * angRefletido;
+    var ponto2 = App.strategiesCalculadora.ponto.calcula([angRefletidoRad, xMax, y, BASE]);
 
     ctx.clearRect(0, 0, w_canvas, h_canvas)
     
     if(!isStart){
-      axis(end_y);
+      axis(y);
       ctx.strokeStyle = '#0CF'
       ctx.lineWidth = 4
       ctx.beginPath()
       ctx.lineCap = "round";
       ctx.moveTo(init_x, init_y)
-      ctx.lineTo(end_x, end_y)
-      ctx.lineTo(end_x_r, end_y_r)
+      ctx.lineTo(xMax, y)
+      ctx.lineTo(ponto2[0], ponto2[1])
       ctx.stroke()
     }
     
-    images(flash_light, 75, 318, deg);
-    document.getElementById("pos-y").value = new_pos;
+    images(flash_light, 75 - (new_pos/1000), 318 - (new_pos/2.2), angCorrigidoGraus);
+    anguloTexto = "Ângulo: " + new_pos + "°";
+    document.getElementById("pos-y").value = anguloTexto;
   }
 
   function images(img, x, y, degrees) {      
@@ -270,13 +245,13 @@ App.espelho = (function ()
         ctx.lineCap = "round";
         ctx.beginPath()
         ctx.moveTo(init_x, init_y)
-        ctx.lineTo(end_x, end_y)        
+        ctx.lineTo(xMax, end_y)        
         ctx.stroke()
       }
 
       ctx.save();
       ctx.translate(x, y);
-      ctx.rotate(0.017453292519943295 * degrees); // 0.017453292519943295 == Math.PI / 180
+      ctx.rotate((Math.PI/180) * degrees); // ângulo em radianos
       ctx.drawImage(img, -0.5 * img.width, -0.5 * img.width);
       ctx.restore();      
   }
@@ -294,7 +269,7 @@ App.espelho = (function ()
   function up() {
     isStart = false;
 
-    if (angle < 200) {
+    if (angle < 41) {
       angle++;
       lines(angle, 'up');
     }
