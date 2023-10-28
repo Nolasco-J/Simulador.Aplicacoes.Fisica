@@ -1,4 +1,4 @@
-﻿/*Garante não haver bordas com focus, seleção, pós click e etc.... em nada*/
+/*Garante não haver bordas com focus, seleção, pós click e etc.... em nada*/
 * {
     outline: none;
     overflow: hidden;
@@ -94,7 +94,7 @@ div.espelhoControles{
 div.divControles{
 	position: absolute; 
 	bottom: 125px; 
-	left: 195px; 
+	left: 110px; 
 	z-index: 100;
 }
 
@@ -170,8 +170,16 @@ button p {
 	margin:10px !important;
 	font-size: 20px;
 }
-#pos-y {
-	display: none;
+
+.posy{
+	width: 130px !important;
+	height: 30px !important;
+	font-size: 20px;
+	text-align: center;
+	color: #fff;
+	background-color: #006;
+	border: 1px #ccc solid;
+	margin-left: 20px;
 }
 
 input::-webkit-outer-spin-button,
