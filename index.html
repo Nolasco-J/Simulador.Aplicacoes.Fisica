@@ -1,0 +1,75 @@
+﻿<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-BR" lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>Simulador.Trigonometria</title>
+
+<link rel="shortcut icon" type="image/x-icon" href="imagens/favicon.ico" />
+<link rel="stylesheet" type="text/css" href="estilos/estilo.css">
+<script type="text/javascript" src="js/jquery/jquery-3.6.4.min.js"></script>
+<script type="text/javascript" src="js/singletons.js"></script>
+<script type="text/javascript" src="js/strategies.js"></script>
+<script type="text/javascript" src="js/graficos.js"></script>
+<script type="text/javascript" src="js/sdTrigonometria.js"></script>
+<script type="text/javascript" src="js/ciclo.js"></script>
+<script type="text/javascript" src="js/teoria.js"></script>
+<script type="text/javascript" src="js/aplicacoes.js"></script>
+<script type="text/javascript" src="js/espelho.js"></script>
+<script type="text/javascript" src="js/creditos.js"></script>
+<script type="text/javascript" src="js/principal.js"></script>
+
+</head>
+<body onselectstart="return false" onload="loadAll();">
+<!--visível durante o load da página-->
+	<div id="preloader" class="preloader">
+		<img src="imagens/loader.gif"/>
+	</div>
+	<!-- visível quando resolução incompatível-->
+	<div class="aviso">
+		<p>Resolução de tela Incompatível.</p>
+		<p>Para total aproveitamento, não utilize</p>
+	 	<p>smartphone ou tablet e mantenha seu</p>
+	 	<p>navegador maximizado e atualizado!</p>
+	</div>
+	<!-- Container Principal-->
+	<div class="container">
+		<!-- Central -->
+		<div id="main" class="mainArea">
+			<div id="divCanvas" class="divCanvas">
+				<canvas id="cvTrigonometrando" class="objectCanvas" width="100" height="100" style="position: absolute; z-index: 2;">
+					<p class="avisoP">Navegador incompatível!</p>
+					<p class="avisoP">Por favor, atualize seu navegador para uma </p>
+				   <p class="avisoP">versão mais recente ou tente utilizar outro.</p>
+				</canvas>
+				<canvas id="cvTrigonometrando2" class="objectCanvas" width="100" height="100" style="position: absolute; z-index: 1;">
+				</canvas>
+				<div id="divEspelhoControles" class="espelhoControles" width="650" height="100" >
+					<canvas id="plot" width="500" height="450">
+						<p class="avisoP">Navegador incompatível!</p>
+						<p class="avisoP">Por favor, atualize seu navegador para uma </p>
+				  		<p class="avisoP">versão mais recente ou tente utilizar outro.</p>
+					  </canvas>
+				</div>				
+				<div id="divControles" class="divControles" width="100" height="100">
+					<form id="form-counters">
+						<button type="button" id="btn-minus" class="btn-posy">-</button>
+						<button type="button" id="btn-plus" class="btn-posy">+</button>						
+						<input type="number" name="posy" min="0" max="150" value="0" id="pos-y" class="number" disabled> <!--DISABLED MESMO???? -->
+					</form>				
+				</div>
+			</div>	 		
+			 <div id="menu" class="menu">
+				<!--Botões do menu principal-->				
+				<button class="menuButton" onclick="App.ciclo.inicio()"><p>Ciclo</p></button>
+				<button class="menuButton" onclick="App.graficos.inicio();"><p>Gráficos</p></button>		
+				<button class="menuButton" onclick="App.teoria.inicio();"><p>Teoria</p></button>		
+				<button class="menuButton" onclick="App.sdTrigonometria.inicio();"><p>Sequência Didática</p></button>				
+				<button class="menuButton" onclick="App.aplicacoes.inicio();"><p>Plano Inclinado</p></button>
+				<button class="menuButton" onclick="App.espelho.inicio();"><p>Reflexão da Luz</p></button>
+				<button class="menuButton" onclick="App.creditos.inicio();"><p>Créditos</p></button>
+				<button class="menuButton" onclick="App.principal.inicio();"><p>Início</p></button>
+			 </div>
+	 	</div> 		
+ 	</div>
+</body>
+</html>

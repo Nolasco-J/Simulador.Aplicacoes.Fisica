@@ -1,0 +1,202 @@
+﻿/*Garante não haver bordas com focus, seleção, pós click e etc.... em nada*/
+* {
+    outline: none;
+    overflow: hidden;
+}
+html, body{
+	width: 100%;
+	min-height: 100%;
+	height: 100%;
+	border-width: 0;
+	margin: auto;
+	font-family: Arial;
+	background-color: black !important;
+	background: url('../imagens/math.jpg') no-repeat;
+	background-size: 100% 100%;
+}
+p.avisoP{
+	text-align: center;
+	font-size: 1.5em;
+	font-family: "Arial";
+	font-weight: bold;
+}
+.preloader {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    top: 0px;
+    z-index: 10;
+	background-color: black !important;
+    display: -webkit-flex;
+	display: flex;
+	-webkit-align-items: center;
+	align-items: center;
+	-webkit-justify-content: center;
+	justify-content: center;
+}
+.aviso{
+	text-align: center;
+	position: absolute;
+	width: 100%;
+	top: 50%;
+	transform: translateY(-50%);
+	background-color: #000 !important;
+	color: #fff;
+}
+.container{
+  /*O container principal deve ser centralizado na vertical
+  e como não foi especificado altura e largura, irá se adaptar ao conteúdo*/
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+
+	/* MAIS NOVO *************************************************/
+	display: -webkit-flex;
+	display: flex;
+	-webkit-align-items: center;
+	align-items: center;
+	-webkit-justify-content: center;
+	justify-content: center;
+}
+.mainArea{
+	width:1000px;
+	height:540px;
+	background-color: transparent;
+	padding: 0px;
+	
+	display: -webkit-flex;
+	display: flex;
+	-webkit-align-items: center;
+	align-items: center;
+	-webkit-justify-content: center;
+	justify-content: center;
+	flex-direction: row;
+}
+div.divCanvas{
+	width:1000px;
+	height:490px;
+	padding: 0px;
+	background-color: transparent;
+	margin-top: -50px;
+	border: 0;
+	position: absolute;
+
+}
+div.espelhoControles{
+	width: 550px;
+	height:450px;
+	position: absolute; 
+	bottom: 0px; 
+	right: 10px; 
+	z-index: 100;
+}
+div.divControles{
+	position: absolute; 
+	bottom: 125px; 
+	left: 195px; 
+	z-index: 100;
+}
+
+.objectCanvas{
+	background-color: transparent;
+	border: 0;
+}
+.menu{
+	width: 1000px;
+	height: 50px;
+	border-width: 0px;
+	margin: auto;
+	margin-top: -10px !important;
+	padding: 0 !important;
+	clear: both;
+	text-align: center;
+	background-color: transparent;
+	bottom: 0;
+	border: 0;
+	position: absolute;
+	z-index: 5 !important;
+}
+button.menuButton{
+	display: inline-block;
+	text-align: center;
+	text-transform: uppercase;
+	width: 112px;
+	height: 100%;
+	font-size: 16px;
+	font-family: Trebuchet MS;
+	color: aqua;
+	padding-top: 0px;
+	background-position: 0 0;
+	background-repeat: no-repeat;
+	background-color: transparent;
+	background-image: url('../imagens/botaoAzul.png');
+	background-size: 112px 48px !important;
+	margin: auto;
+	margin-left: 2px;
+	margin-right: 2px;
+	border: 0;
+}
+button.menuButton:active{
+	width: 111px;
+	background-size: 111px 48px !important;
+	font-size: 15px;
+	z-index: 5 !important;
+}
+button.menuButton:hover {
+	width: 113px;
+	height: 49px;
+	background-size: 113px 49px !important;
+	font-size: 17px;
+}
+button p {
+	position: absolute;
+	margin: auto;
+	margin-left: -42px;
+	top: 50%;
+    transform: translateY(-50%);
+	display: inline-grid;
+	align-items: center;
+	width: 85px;
+	max-width: 85px;
+	height: 40px;
+	line-height: 1.01 !important;
+	text-align: center;	
+	border: 0;
+}
+.btn-posy{
+	width: 30px !important;
+	height: 30px !important;
+	margin:10px !important;
+	font-size: 20px;
+}
+#pos-y {
+	display: none;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+    -moz-appearance:textfield;
+}
+
+@media screen and (min-width: 1000px) and (min-height: 550px){
+	.aviso{
+		display: none;
+	}
+}
+@media screen and (max-width: 999px){
+	.container{
+		display: none;
+	}
+}
+@media screen and (max-height: 549px){
+	.container{
+		display: none;
+	}
+} 
