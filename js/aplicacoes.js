@@ -13,13 +13,24 @@ App.aplicacoes = (function ()
   var X_ZERO;
   var Y_ZERO;
   var BASE;
-
+  var BASE_Py_inicial;
+  var BASE_Px_inicial;
+  
   //Constantes numéricas - ângulos principais
   var CENTO_OITENTA = Math.PI;
   var NOVENTA = CENTO_OITENTA/2;
   var TRINTA = NOVENTA/3;
   var DUZENTOS_SETENTA = CENTO_OITENTA + NOVENTA;
-  
+    
+   var massa_inicial = 10;
+   var g_inicial = 9.8;
+   var p_inicial = massa_inicial * g_inicial;
+    
+  var angRadInicial = TRINTA;
+  var py_inicial = p_inicial * Math.cos(angRadInicial);
+  var px_inicial = p_inicial * Math.sin(angRadInicial);
+  var reduzdimensao = 250;
+    
   $(document).ready( function()
   {
     //instância de singletonCanvas
@@ -29,7 +40,9 @@ App.aplicacoes = (function ()
     //constantes para serem usadas pelas funções
     X_ZERO = objCanvas.canvasWidth/2;
     Y_ZERO = objCanvas.canvasHeight/2 + objCanvas.canvasHeight/5;
-    BASE = objCanvas.canvasWidth/2.5;
+    BASE = (objCanvas.canvasWidth)/(reduzdimensao/p_inicial);
+    BASE_Py_inicial = (objCanvas.canvasWidth)/(reduzdimensao/py_inicial);
+    BASE_Px_inicial = (objCanvas.canvasWidth)/(reduzdimensao/px_inicial);
   })
 
   //Função Principal
@@ -90,7 +103,7 @@ App.aplicacoes = (function ()
       objCanvas.canvasHeight/2 + objCanvas.canvasHeight/15
     ]);
 
-        /*
+    /*
       Mensagem de Informação e Título
     */
       mensagem = "Aplicações na Física - Plano Inclinado";
@@ -98,7 +111,7 @@ App.aplicacoes = (function ()
         "2",
         mensagem,
         "#0fc",
-        "Bold 32px Trebuchet MS",
+        "Bold 30px Trebuchet MS",
         objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 - ((BASE/18)*9),
         70
       ]);
@@ -108,7 +121,7 @@ App.aplicacoes = (function ()
       "2",
       mensagem,
       "#0fc",
-      "Bold 18px Trebuchet MS",
+      "Bold 16px Trebuchet MS",
       objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)*3),
       100
     ]);
@@ -117,7 +130,7 @@ App.aplicacoes = (function ()
       "2",
       mensagem,
       "#0fc",
-      "Bold 18px Trebuchet MS",
+      "Bold 16px Trebuchet MS",
       objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)*3),
       125
     ]);
@@ -127,8 +140,8 @@ App.aplicacoes = (function ()
         "2",
         mensagem,
         "#0fc",
-        "Bold 18px Trebuchet MS",
-        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)),
+        "Bold 16px Trebuchet MS",
+        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)),
         170
       ]);
 
@@ -137,19 +150,20 @@ App.aplicacoes = (function ()
         "2",
         mensagem,
         "#0fc",
-        "Bold 18px Trebuchet MS",
-        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)),
-        225
+        "Bold 16px Trebuchet MS",
+        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)),
+        195
       ]);
 
-      mensagem = "10 kg";
+      mensagem = "10.0 kg";
       App.strategiesTela.construtorTexto.executa([
         "2",
         mensagem,
         "#FFF",
-        "Bold 18px Trebuchet MS",
-        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)*7),
-        250
+        "Bold 16px Trebuchet MS",
+        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)*18),
+        // *7 se refere à posição horizontal e 250 à posição vertical
+        195
       ]);
 
       mensagem = "Força Peso: ";
@@ -157,9 +171,28 @@ App.aplicacoes = (function ()
         "2",
         mensagem,
         "#0fc",
-        "Bold 18px Trebuchet MS",
-        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)),
-        280
+        "Bold 16px Trebuchet MS",
+        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)),
+        220
+      ]);
+      mensagem = "Componente Px da Força Peso: ";
+      App.strategiesTela.construtorTexto.executa([
+        "2",
+        mensagem,
+        "#0fc",
+        "Bold 16px Trebuchet MS",
+        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)),
+        245
+      ]);
+      
+      mensagem = "Componente Py da Força Peso: ";
+      App.strategiesTela.construtorTexto.executa([
+        "2",
+        mensagem,
+        "#0fc",
+        "Bold 16px Trebuchet MS",
+        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)),
+        270
       ]);
 
       mensagem = "Força Normal: ";
@@ -167,9 +200,9 @@ App.aplicacoes = (function ()
         "2",
         mensagem,
         "#0fc",
-        "Bold 18px Trebuchet MS",
-        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)),
-        305
+        "Bold 16px Trebuchet MS",
+        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)),
+        295
       ]);
 
       mensagem = "Aceleração: ";
@@ -177,9 +210,9 @@ App.aplicacoes = (function ()
         "2",
         mensagem,
         "#0fc",
-        "Bold 18px Trebuchet MS",
-        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)),
-        330
+        "Bold 16px Trebuchet MS",
+        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)),
+        320
       ]);
 
       mensagem = "Considerando: ";
@@ -187,8 +220,8 @@ App.aplicacoes = (function ()
         "2",
         mensagem,
         "#0fc",
-        "Bold 18px Trebuchet MS",
-        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)),
+        "Bold 16px Trebuchet MS",
+        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)),
         360
       ]);
 
@@ -197,8 +230,8 @@ App.aplicacoes = (function ()
         "2",
         mensagem,
         "#0fc",
-        "Bold 18px Trebuchet MS",
-        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)),
+        "Bold 16px Trebuchet MS",
+        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)),
         385
       ]);
 
@@ -207,19 +240,22 @@ App.aplicacoes = (function ()
         "2",
         mensagem,
         "#0fc",
-        "Bold 18px Trebuchet MS",
-        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)),
+        "Bold 16px Trebuchet MS",
+        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)),
         410
       ]);
 
-      var calculos = calculaForcasAceleracao((30*CENTO_OITENTA)/180);  
-      reescreve(30, calculos[0], calculos[1], calculos[2]);
+    var calculos = calculaForcasAceleracao((30*CENTO_OITENTA)/180);  
+    // linha a seguir determina quantas variáveis calculadas podem ficar visíveis na tela  
+    reescreve(30, calculos[0], calculos[1], calculos[2], calculos[3], calculos[4]);
 
-     //Base do plano inclinado - no canvas 2 pois não precisa redesenhar
+    //Base do plano inclinado - no canvas 2 pois não precisa redesenhar
     desenhaReta((X_ZERO)-(BASE), Y_ZERO, (X_ZERO), Y_ZERO, "#FFF", 4, "2");
 
     // Ângulo inicial: 30°
     var angRadInicial = (210*CENTO_OITENTA)/180;
+    //angulos contados a partir do eixo x e caminhando no sentido horário ... por isso 30° = 210° (180° + 30°)
+    // e cento_oitenta é uma variável criada anteriormente, a partir do Pi (Math.PI)
 
     //Preenche o ângulo com um segmento de arco, para indicar a área que ele representa    
     // Desenhando
@@ -254,31 +290,29 @@ App.aplicacoes = (function ()
     // Ângulo entre Py e P
     var angRetaP = CENTO_OITENTA-(DUZENTOS_SETENTA-angRadInicial)
 
-
     // Coornedadas do ponto central do quadrilátero, 
     // que será início para as retas N, P, Px e Py
     var NovoXZero = (pontoA[0]+pontoC[0])/2
     var NovoYZero = (pontoA[1]+pontoC[1])/2
 
     // Coordenadas dos pontos para:
-    //  a reta que representa o sentido da força normal N
-    //  a reta que representa a força peso (gravidade) P
-    //  a reta Px 
-    //  a reta Py    
-    var pontoE = App.strategiesCalculadora.ponto.calcula([angRadInicial + NOVENTA, NovoXZero, NovoYZero, (BASE/18)*4]);
-    var pontoF = App.strategiesCalculadora.ponto.calcula([angRadInicial - NOVENTA, NovoXZero, NovoYZero, (BASE/14)*4]);
+    //  a reta que representa o sentido da força normal N ... ponto E
+    //  a reta que representa a força peso (gravidade) P ... ponto G
+    //  a reta Px ... ponto H
+    //  a reta Py ... ponto F ... comprimento de E = F e ambos precisam ser menores que G ... ajustando valores em BASE/12 para Peso e BASE/14 para N  e BASE/24 para Px
+    var pontoE = App.strategiesCalculadora.ponto.calcula([angRadInicial + NOVENTA, NovoXZero, NovoYZero, (BASE_Py_inicial/14)*4]);
+    var pontoF = App.strategiesCalculadora.ponto.calcula([angRadInicial - NOVENTA, NovoXZero, NovoYZero, (BASE_Py_inicial/14)*4]);
     var pontoG = App.strategiesCalculadora.ponto.calcula([angRadInicial - angRetaP, NovoXZero, NovoYZero, (BASE/14)*4]);
-    var pontoH = App.strategiesCalculadora.ponto.calcula([angRadInicial - CENTO_OITENTA, NovoXZero, NovoYZero, (BASE/16)*4]);
+    var pontoH = App.strategiesCalculadora.ponto.calcula([angRadInicial - CENTO_OITENTA, NovoXZero, NovoYZero, (BASE_Px_inicial/14)*4]);
 
-    var pontoI = App.strategiesCalculadora.ponto.calcula([angRadInicial + NOVENTA - (TRINTA/10), NovoXZero, NovoYZero, (BASE/18)*3.5]);
-    var pontoJ = App.strategiesCalculadora.ponto.calcula([angRadInicial + NOVENTA + (TRINTA/10), NovoXZero, NovoYZero, (BASE/18)*3.5]);
-    var pontoK = App.strategiesCalculadora.ponto.calcula([angRadInicial - NOVENTA - (TRINTA/10), NovoXZero, NovoYZero, (BASE/14)*3.5]);
-    var pontoL = App.strategiesCalculadora.ponto.calcula([angRadInicial - NOVENTA + (TRINTA/10), NovoXZero, NovoYZero, (BASE/14)*3.5]);
+    var pontoI = App.strategiesCalculadora.ponto.calcula([angRadInicial + NOVENTA - (TRINTA/10), NovoXZero, NovoYZero, (BASE_Py_inicial/14)*3.5]);
+    var pontoJ = App.strategiesCalculadora.ponto.calcula([angRadInicial + NOVENTA + (TRINTA/10), NovoXZero, NovoYZero, (BASE_Py_inicial/14)*3.5]);
+    var pontoK = App.strategiesCalculadora.ponto.calcula([angRadInicial - NOVENTA - (TRINTA/10), NovoXZero, NovoYZero, (BASE_Py_inicial/14)*3.5]);
+    var pontoL = App.strategiesCalculadora.ponto.calcula([angRadInicial - NOVENTA + (TRINTA/10), NovoXZero, NovoYZero, (BASE_Py_inicial/14)*3.5]);
     var pontoM = App.strategiesCalculadora.ponto.calcula([angRadInicial - angRetaP - (TRINTA/10), NovoXZero, NovoYZero, (BASE/14)*3.5]);
     var pontoN = App.strategiesCalculadora.ponto.calcula([angRadInicial - angRetaP + (TRINTA/10), NovoXZero, NovoYZero, (BASE/14)*3.5]);
-    var pontoO = App.strategiesCalculadora.ponto.calcula([angRadInicial - CENTO_OITENTA - (TRINTA/10), NovoXZero, NovoYZero, (BASE/16)*3.5]);
-    var pontoP = App.strategiesCalculadora.ponto.calcula([angRadInicial - CENTO_OITENTA + (TRINTA/10), NovoXZero, NovoYZero, (BASE/16)*3.5]);
-
+    var pontoO = App.strategiesCalculadora.ponto.calcula([angRadInicial - CENTO_OITENTA - (TRINTA/10), NovoXZero, NovoYZero, (BASE_Px_inicial/14)*3.5]);
+    var pontoP = App.strategiesCalculadora.ponto.calcula([angRadInicial - CENTO_OITENTA + (TRINTA/10), NovoXZero, NovoYZero, (BASE_Px_inicial/14)*3.5]);
 
     // Reta - Força N e seta
     desenhaReta(NovoXZero, NovoYZero, pontoE[0], pontoE[1], "#0F0", 3, "1");
@@ -303,7 +337,7 @@ App.aplicacoes = (function ()
     escreveForcas(pontoE, pontoF, pontoG, pontoH);
 
      // Retas Pontilhadas
-     var pontoQ = [pontoG[0], pontoG[1]-(BASE/30)];
+     var pontoQ = [pontoG[0], pontoG[1]];
 
      var pontoR = App.strategiesCalculadora.pontoPxPy.calcula([NovoXZero, NovoYZero, pontoH[0], pontoH[1], angRadInicial + NOVENTA, pontoQ[0], pontoQ[1]]);
      desenhaReta(pontoQ[0], pontoQ[1], pontoR[0], pontoR[1], "#DAA520", 1, "1");
@@ -312,16 +346,16 @@ App.aplicacoes = (function ()
      desenhaReta(pontoQ[0], pontoQ[1], pontoS[0], pontoS[1], "#DAA520", 1, "1");
   }
 
-  var reescreve = function(angulo, p, n, a){
+  var reescreve = function(angulo, p, px, py, n, a){
 
     var mensagem = angulo + "°";
     App.strategiesTela.construtorTexto.executa([
       "1",
       mensagem,
       "#FFF",
-      "Bold 18px Trebuchet MS",
-      objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)*7.2),
-      195
+      "Bold 16px Trebuchet MS",
+      objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)*15),
+      170
     ]);
 
     mensagem = p + " N";
@@ -329,9 +363,29 @@ App.aplicacoes = (function ()
       "1",
       mensagem,
       "#FFF",
-      "Bold 18px Trebuchet MS",
-      objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)*6),
-      280
+      "Bold 16px Trebuchet MS",
+      objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)*5),
+      220
+    ]);
+
+    mensagem = px + " N";
+    App.strategiesTela.construtorTexto.executa([
+      "1",
+      mensagem,
+      "#FFF",
+      "Bold 16px Trebuchet MS",
+      objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)*12),
+      245
+    ]);
+
+    mensagem = py + " N";
+    App.strategiesTela.construtorTexto.executa([
+      "1",
+      mensagem,
+      "#FFF",
+      "Bold 16px Trebuchet MS",
+      objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)*12),
+      270
     ]);
 
     mensagem = n + " N";
@@ -339,9 +393,9 @@ App.aplicacoes = (function ()
       "1",
       mensagem,
       "#FFF",
-      "Bold 18px Trebuchet MS",
-      objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)*7),
-      305
+      "Bold 16px Trebuchet MS",
+      objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)*6),
+      295
     ]);
 
     mensagem = a + " m/s²";
@@ -349,9 +403,9 @@ App.aplicacoes = (function ()
       "1",
       mensagem,
       "#FFFS",
-      "Bold 18px Trebuchet MS",
-      objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)*6),
-      330
+      "Bold 16px Trebuchet MS",
+      objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)*5),
+      320
     ]);
   }
 
@@ -364,6 +418,18 @@ App.aplicacoes = (function ()
   //----------------------------------------------------------------------------
   var reDesenha = function (pontoX, pontoY, angRad)
   {
+
+  //constantes
+    var massa = 10;
+    var g = 9.8;
+    var p = massa * g;
+    var px = p * Math.sin(angRad);
+    var py = p * Math.cos(angRad);
+    var n = p * Math.cos(angRad);
+    var a = g * Math.sin(angRad);
+    var BASE_Py = (objCanvas.canvasWidth)/(reduzdimensao/py);
+    var BASE_Px = (objCanvas.canvasWidth)/(reduzdimensao/px);
+      
     //limpeza inicial da tela, para reconstrução
     //somente o canvas superior
     App.strategiesTela.limpaTela.executa([
@@ -405,10 +471,8 @@ App.aplicacoes = (function ()
     desenhaReta(pontoC[0], pontoC[1], pontoD[0], pontoD[1], "#B22222", 4, "1");
     desenhaReta(pontoA[0], pontoA[1], pontoD[0], pontoD[1], "#B22222", 4, "1");
 
-
     // Ângulo entre Py e P
     var angRetaP = CENTO_OITENTA-(DUZENTOS_SETENTA-angRad)
-
 
     // Coornedadas do ponto central do quadrilátero, 
     // que será início para as retas N, P, Px e Py
@@ -416,23 +480,23 @@ App.aplicacoes = (function ()
     var NovoYZero = (pontoA[1]+pontoC[1])/2
 
     // Coordenadas dos pontos para:
-    //  a reta que representa o sentido da força normal N
-    //  a reta que representa a força peso (gravidade) P
-    //  a reta Px 
-    //  a reta Py    
-    var pontoE = App.strategiesCalculadora.ponto.calcula([angRad + NOVENTA, NovoXZero, NovoYZero, (BASE/18)*4]);
-    var pontoF = App.strategiesCalculadora.ponto.calcula([angRad - NOVENTA, NovoXZero, NovoYZero, (BASE/14)*4]);
+    //  a reta que representa o sentido da força normal N ... ponto E
+    //  a reta que representa a força peso (gravidade) P ... ponto G
+    //  a reta Px ... ponto H
+    //  a reta Py ... ponto F ... comprimento de E = F e ambos precisam ser menores que G ... ajustando valores em BASE/12 para Peso e BASE/14 para N  e BASE/24 para Px
+    var pontoE = App.strategiesCalculadora.ponto.calcula([angRad - NOVENTA, NovoXZero, NovoYZero, (BASE_Py/14)*4]);
+    var pontoF = App.strategiesCalculadora.ponto.calcula([angRad + NOVENTA, NovoXZero, NovoYZero, (BASE_Py/14)*4]);
     var pontoG = App.strategiesCalculadora.ponto.calcula([angRad - angRetaP, NovoXZero, NovoYZero, (BASE/14)*4]);
-    var pontoH = App.strategiesCalculadora.ponto.calcula([angRad - CENTO_OITENTA, NovoXZero, NovoYZero, (BASE/16)*4]);
+    var pontoH = App.strategiesCalculadora.ponto.calcula([angRad, NovoXZero, NovoYZero, (BASE_Px/14)*4]);
 
-    var pontoI = App.strategiesCalculadora.ponto.calcula([angRad + NOVENTA - (TRINTA/10), NovoXZero, NovoYZero, (BASE/18)*3.5]);
-    var pontoJ = App.strategiesCalculadora.ponto.calcula([angRad + NOVENTA + (TRINTA/10), NovoXZero, NovoYZero, (BASE/18)*3.5]);
-    var pontoK = App.strategiesCalculadora.ponto.calcula([angRad - NOVENTA - (TRINTA/10), NovoXZero, NovoYZero, (BASE/14)*3.5]);
-    var pontoL = App.strategiesCalculadora.ponto.calcula([angRad - NOVENTA + (TRINTA/10), NovoXZero, NovoYZero, (BASE/14)*3.5]);
+    var pontoI = App.strategiesCalculadora.ponto.calcula([angRad - NOVENTA - (TRINTA/10), NovoXZero, NovoYZero, (BASE_Py/14)*3.5]);
+    var pontoJ = App.strategiesCalculadora.ponto.calcula([angRad - NOVENTA + (TRINTA/10), NovoXZero, NovoYZero, (BASE_Py/14)*3.5]);
+    var pontoK = App.strategiesCalculadora.ponto.calcula([angRad + NOVENTA - (TRINTA/10), NovoXZero, NovoYZero, (BASE_Py/14)*3.5]);
+    var pontoL = App.strategiesCalculadora.ponto.calcula([angRad + NOVENTA + (TRINTA/10), NovoXZero, NovoYZero, (BASE_Py/14)*3.5]);
     var pontoM = App.strategiesCalculadora.ponto.calcula([angRad - angRetaP - (TRINTA/10), NovoXZero, NovoYZero, (BASE/14)*3.5]);
     var pontoN = App.strategiesCalculadora.ponto.calcula([angRad - angRetaP + (TRINTA/10), NovoXZero, NovoYZero, (BASE/14)*3.5]);
-    var pontoO = App.strategiesCalculadora.ponto.calcula([angRad - CENTO_OITENTA - (TRINTA/10), NovoXZero, NovoYZero, (BASE/16)*3.5]);
-    var pontoP = App.strategiesCalculadora.ponto.calcula([angRad - CENTO_OITENTA + (TRINTA/10), NovoXZero, NovoYZero, (BASE/16)*3.5]);
+    var pontoO = App.strategiesCalculadora.ponto.calcula([angRad - (TRINTA/10), NovoXZero, NovoYZero, (BASE_Px/14)*3.5]);
+    var pontoP = App.strategiesCalculadora.ponto.calcula([angRad + (TRINTA/10), NovoXZero, NovoYZero, (BASE_Px/14)*3.5]);
 
     // Reta - Força N e seta
     desenhaReta(NovoXZero, NovoYZero, pontoE[0], pontoE[1], "#0F0", 3, "1");
@@ -457,7 +521,7 @@ App.aplicacoes = (function ()
     escreveForcas(pontoE, pontoF, pontoG, pontoH);
 
     // Retas Pontilhadas
-    var pontoQ = [pontoG[0], pontoG[1]-(BASE/30)];
+    var pontoQ = [pontoG[0], pontoG[1]];
 
     var pontoR = App.strategiesCalculadora.pontoPxPy.calcula([NovoXZero, NovoYZero, pontoH[0], pontoH[1], angRad + NOVENTA, pontoQ[0], pontoQ[1]]);
     desenhaReta(pontoQ[0], pontoQ[1], pontoR[0], pontoR[1], "#DAA520", 1, "1");
@@ -537,13 +601,15 @@ App.aplicacoes = (function ()
       Aceleração da Gravidade: 9,8m/s2.
       Sem atrito.
      */
-      var massa = 10;
+      var massa = 10.0;
       var g = 9.8;
       var p = massa * g;
-      var n = p * Math.cos(angFinal);
-      var a = g * Math.sin(angFinal);
-
-      return [p, parseFloat(n).toFixed(5), parseFloat(a).toFixed(5)];
+      var px = p * Math.sin(angFinal);
+      var py = p * Math.cos(angFinal);
+      var n = py;
+      var a = px/massa;
+      // parseFloat define quantas casas decimais são exibidas
+      return [parseFloat(p).toFixed(1), parseFloat(px).toFixed(1), parseFloat(py).toFixed(1), parseFloat(n).toFixed(1), parseFloat(a).toFixed(1)];
 
   }
 
@@ -617,7 +683,8 @@ App.aplicacoes = (function ()
       // para redesenhar e escreescrever
       var ponto = App.strategiesCalculadora.ponto.calcula([angRad, X_ZERO, Y_ZERO, BASE]);
       reDesenha(ponto[0], ponto[1], angRad);
-      reescreve(angFinal-180, calculos[0], calculos[1], calculos[2]);
+      // linha a seguir determina quantas variáveis calculadas podem ficar visíveis na tela  
+      reescreve(angFinal-180, calculos[0], calculos[1], calculos[2], calculos[3], calculos[4]);
     });
   } //Fim ajustaKeydown
 
