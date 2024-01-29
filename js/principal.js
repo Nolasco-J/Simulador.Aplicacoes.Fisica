@@ -69,14 +69,24 @@ App.principal = (function ()
       objCanvas.canvasHeight/7 + (2*(objCanvas.canvasWidth/4)*0.25) -90
     ]);
 
-    mensagem = "SIMULADOR DE FÍSICA/TRIGONOMETRIA.";
+    mensagem = "SIMULADOR APLICAÇÕES DE";
     App.strategiesTela.construtorTexto.executa([
       "1",
       mensagem,
       "#0fc",
       "40px Trebuchet MS",
       objCanvas.canvasWidth/7.2,
-      objCanvas.canvasHeight/7 + (2*(objCanvas.canvasWidth/4)*0.25) -5
+      objCanvas.canvasHeight/7 + (2*(objCanvas.canvasWidth/4)*0.25) -20
+    ]);
+
+    mensagem = "DE FÍSICA / MEDIDAS ANGULARES.";
+    App.strategiesTela.construtorTexto.executa([
+      "1",
+      mensagem,
+      "#0fc",
+      "40px Trebuchet MS",
+      objCanvas.canvasWidth/7.2,
+      objCanvas.canvasHeight/7 + (2*(objCanvas.canvasWidth/4)*0.25) +30
     ]);
 
     mensagem = "Comigo, você pode consultar e praticar conceitos de plano inclinado,";
@@ -86,7 +96,7 @@ App.principal = (function ()
       "#0fc",
       "24px Trebuchet MS",
       (objCanvas.canvasWidth/7.2),
-      objCanvas.canvasHeight/7 + (2*(objCanvas.canvasWidth/4)*0.25) + 55
+      objCanvas.canvasHeight/7 + (2*(objCanvas.canvasWidth/4)*0.25) + 85
     ]);
 
     mensagem = "reflexão e trigonometria na circunferência.";
@@ -96,7 +106,7 @@ App.principal = (function ()
       "#0fc",
       "24px Trebuchet MS",
       objCanvas.canvasWidth/7.2,
-      objCanvas.canvasHeight/7 + (2*(objCanvas.canvasWidth/4)*0.25) + 115
+      objCanvas.canvasHeight/7 + (2*(objCanvas.canvasWidth/4)*0.25) + 125
     ]);
 
     mensagem = "Sinta-se à vontade para";
