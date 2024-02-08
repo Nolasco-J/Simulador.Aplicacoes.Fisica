@@ -69,7 +69,7 @@ App.principal = (function ()
       objCanvas.canvasHeight/7 + (2*(objCanvas.canvasWidth/4)*0.25) -90
     ]);
 
-    mensagem = "SIMULADOR APLICAÇÕES DE";
+    mensagem = "SIMULADOR APLICAÇÕES";
     App.strategiesTela.construtorTexto.executa([
       "1",
       mensagem,
@@ -99,7 +99,7 @@ App.principal = (function ()
       objCanvas.canvasHeight/7 + (2*(objCanvas.canvasWidth/4)*0.25) + 85
     ]);
 
-    mensagem = "reflexão e trigonometria na circunferência.";
+    mensagem = "reflexão da luz e trigonometria na circunferência.";
     App.strategiesTela.construtorTexto.executa([
       "1",
       mensagem,
