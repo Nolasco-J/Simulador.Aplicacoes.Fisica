@@ -209,7 +209,7 @@ App.strategiesTela = (function ()
       objCanvas.ctx1.stroke();
       objCanvas.ctx1.closePath();
     }
-    else
+    else if(array[0]=="2")
     {
       objCanvas.ctx2.beginPath();
       objCanvas.ctx2.strokeStyle = array[5];
@@ -220,6 +220,17 @@ App.strategiesTela = (function ()
       objCanvas.ctx2.stroke();
       objCanvas.ctx2.closePath();
     }
+    else
+      {
+        objCanvas.ctx3.beginPath();
+        objCanvas.ctx3.strokeStyle = array[5];
+        objCanvas.ctx3.lineWidth = array[6];
+        objCanvas.ctx3.lineCap = "round"; //pontas arredondadas
+        objCanvas.ctx3.moveTo(array[1], array[2]);
+        objCanvas.ctx3.lineTo(array[3], array[4]);
+        objCanvas.ctx3.stroke();
+        objCanvas.ctx3.closePath();
+      }
   }
 
   //Desenha retas pontilhadas
@@ -239,7 +250,7 @@ App.strategiesTela = (function ()
       objCanvas.ctx1.setLineDash([0]);
       objCanvas.ctx1.closePath();
     }
-    else
+    else if(array[0]=="2")
     {
       objCanvas.ctx2.beginPath();
       objCanvas.ctx2.strokeStyle = array[5];
@@ -252,6 +263,20 @@ App.strategiesTela = (function ()
       //Remove a propriedade de pontilhado, para não afetar os demais desenhos
       objCanvas.ctx2.setLineDash([0]);
       objCanvas.ctx2.closePath();
+    }
+    else
+    {
+      objCanvas.ctx3.beginPath();
+      objCanvas.ctx3.strokeStyle = array[5];
+      objCanvas.ctx3.setLineDash(array[7]);
+      objCanvas.ctx3.lineCap = "round"; //pontas arredondadas
+      objCanvas.ctx3.lineWidth = array[6];
+      objCanvas.ctx3.moveTo(array[1], array[2]);
+      objCanvas.ctx3.lineTo(array[3], array[4]);
+      objCanvas.ctx3.stroke();
+      //Remove a propriedade de pontilhado, para não afetar os demais desenhos
+      objCanvas.ctx3.setLineDash([0]);
+      objCanvas.ctx3.closePath();
     }
   }
 
@@ -270,7 +295,7 @@ App.strategiesTela = (function ()
       objCanvas.ctx1.fill();
       objCanvas.ctx1.closePath();
     }
-    else
+    else if(array[0]=="2")
     {
       objCanvas.ctx2.beginPath();
       objCanvas.ctx2.font = array[3]; //Define Tamanho e fonte
@@ -279,6 +304,16 @@ App.strategiesTela = (function ()
       objCanvas.ctx2.fillText(array[1], array[4], array[5]); //Desenha a mensagem
       objCanvas.ctx2.fill();
       objCanvas.ctx2.closePath();
+    }
+    else
+    {
+      objCanvas.ctx3.beginPath();
+      objCanvas.ctx3.font = array[3]; //Define Tamanho e fonte
+      objCanvas.ctx3.fillStyle = array[2]; //Define a cor
+
+      objCanvas.ctx3.fillText(array[1], array[4], array[5]); //Desenha a mensagem
+      objCanvas.ctx3.fill();
+      objCanvas.ctx3.closePath();
     }
 
   }
@@ -292,8 +327,14 @@ App.strategiesTela = (function ()
     {
       objCanvas.ctx1.clearRect(array[1], array[2], array[3], array[4]);
     }
-    else
+    else if(array[0]=="2")
+    {
       objCanvas.ctx2.clearRect(array[1], array[2], array[3], array[4]);
+    }
+    else
+    {
+      objCanvas.ctx3.clearRect(array[1], array[2], array[3], array[4]);
+    }
   }
 
   /*
