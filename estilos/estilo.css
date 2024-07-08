@@ -97,6 +97,12 @@ div.divControles{
 	left: 110px; 
 	z-index: 100;
 }
+div.divControles-ng{
+	position: absolute; 
+	bottom: 55px; 
+	left: 150px; 
+	z-index: 100;
+}
 
 .objectCanvas{
 	background-color: transparent;
@@ -164,11 +170,20 @@ button p {
 	text-align: center;	
 	border: 0;
 }
+
 .btn-posy{
 	width: 30px !important;
 	height: 30px !important;
 	margin:10px !important;
 	font-size: 20px;
+}
+
+.btn-posy-ng{
+	width: 75px !important;
+	height: 30px !important;
+	margin: 5px !important;
+	font-size: 16px;
+	font-weight: bold;
 }
 
 .posy{
@@ -192,6 +207,25 @@ input::-webkit-inner-spin-button {
 input[type=number] {
     -moz-appearance:textfield;
 }
+
+.dropdown {
+	position: relative;
+	display: inline-block;
+  }
+  
+  .dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: #f9f9f9;
+	min-width: 160px;
+	box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+	padding: 12px 16px;
+	z-index: 1;
+  }
+  
+  .dropdown:hover .dropdown-content {
+	display: block;
+  }
 
 @media screen and (min-width: 1000px) and (min-height: 550px){
 	.aviso{
