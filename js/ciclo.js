@@ -40,8 +40,11 @@ App.ciclo = (function ()
   {
     document.getElementById("divEspelhoControles").style.display = 'none';
     document.getElementById("divControles").style.display = 'none';
+    document.getElementById("divControlesAnima").style.display = 'none';
+    document.getElementById("cvTrigonometrando3").style.display = 'none';
 
     App.teoria.pararAnimacao();//se houver algo rodando, pára
+    App.aplicacoes.pararAnimacao();//se houver algo rodando, pára
 
     //quando início é executado, a primeira tela do módulo é renderizada
     //aqui, indica que é a primeira tela
