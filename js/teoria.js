@@ -52,8 +52,11 @@ App.teoria = (function ()
   {
     document.getElementById("divEspelhoControles").style.display = 'none';
     document.getElementById("divControles").style.display = 'none';
+    document.getElementById("divControlesAnima").style.display = 'none';
+    document.getElementById("cvTrigonometrando3").style.display = 'none';
 
     pararAnima(); //caso alguma animação esteja rodando, pára!
+    App.aplicacoes.pararAnimacao();//se houver algo rodando, pára
 
     funcaoAtual = "inicio";
 
