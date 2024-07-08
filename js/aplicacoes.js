@@ -30,12 +30,56 @@ App.aplicacoes = (function ()
   var py_inicial = p_inicial * Math.cos(angRadInicial);
   var px_inicial = p_inicial * Math.sin(angRadInicial);
   var reduzdimensao = 250;
+
+  // Coordenadas dos pontos para desenhar o corpo sobre o plano
+  var pontoA;
+  var pontoB;
+  var pontoC;
+  var pontoD;
+
+  var anguloRadAtualParaAnimacao; // ângulo NÃO CORRIGIDO pro canvas - O visto na tela!!!!
+  var anguloGrauAtualParaAnimacao; // ângulo em GRAUs - para comparação
+  var anguloRadAtualParaAnimacaoCorrigido;
+  var aceleracaoAtualParaAnimacao;
+  var BASE_Py;
+  var BASE_Px;
+  var animacao;
+
+  // Variáveis para animação
+  var initialTime; // Instante inicial da animação - precisa ser iniciado apenas quando der start na animação
+  var currentTime;
     
   $(document).ready( function()
   {
     //instância de singletonCanvas
     objCanvas = App.singletons.singletonCanvas.getInstancia();
-    objImagens = App.singletons.singletonImagens.getInstancia();
+    objImagens = App.singletons.singletonImagens.getInstancia();    
+  })
+
+  //funcao para parar animações, inclusive fora do arquivo
+  var pararAnima = function(){
+    if(animacao!=null)
+      cancelAnimationFrame(animacao);
+  }
+
+  //Função Principal
+  var inicio = function ()
+  {    
+    App.teoria.pararAnimacao();//se houver algo rodando, pára
+    pararAnima();
+
+    pontoA = null;
+    pontoB = null;
+    pontoC = null;
+    pontoD = null;
+    anguloRadAtualParaAnimacao = null; // ângulo NÃO CORRIGIDO pro canvas - O visto na tela!!!!
+    anguloGrauAtualParaAnimacao = null; // ângulo em GRAUs - para comparação
+    anguloRadAtualParaAnimacaoCorrigido = null;
+    aceleracaoAtualParaAnimacao = null;
+    BASE_Py = null;
+    BASE_Px = null;
+    initialTime = null;
+    currentTime = null;
 
     //constantes para serem usadas pelas funções
     X_ZERO = objCanvas.canvasWidth/2;
@@ -43,15 +87,22 @@ App.aplicacoes = (function ()
     BASE = (objCanvas.canvasWidth)/(reduzdimensao/p_inicial);
     BASE_Py_inicial = (objCanvas.canvasWidth)/(reduzdimensao/py_inicial);
     BASE_Px_inicial = (objCanvas.canvasWidth)/(reduzdimensao/px_inicial);
-  })
 
-  //Função Principal
-  var inicio = function ()
-  {    
+    document.getElementById("animar").onclick = function() {
+      animarBloco();    
+    };
+
+    document.getElementById("voltar").onclick = function() {
+      finalizaAnimacaoBloco();    
+    };    
+
     document.getElementById("divEspelhoControles").style.display = 'none';
     document.getElementById("divControles").style.display = 'none';
+    document.getElementById("divControlesAnima").style.display = 'block';
+    document.getElementById("cvTrigonometrando3").style.display = 'block';
     
-    App.teoria.pararAnimacao();//se houver algo rodando, pára
+    document.getElementById("animar").disabled = false;
+    document.getElementById("voltar").disabled = true;
 
     //quando início é executado, a primeira tela do módulo é renderizada
     //aqui, indica que é a primeira tela
@@ -75,6 +126,14 @@ App.aplicacoes = (function ()
 
     App.strategiesTela.limpaTela.executa([
       "2",
+      0,
+      0,
+      objCanvas.canvasWidth,
+      objCanvas.canvasHeight
+    ]);
+
+    App.strategiesTela.limpaTela.executa([
+      "3",
       0,
       0,
       objCanvas.canvasWidth,
@@ -244,109 +303,34 @@ App.aplicacoes = (function ()
         objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)),
         410
       ]);
-
-    var calculos = calculaForcasAceleracao((30*CENTO_OITENTA)/180);  
-    // linha a seguir determina quantas variáveis calculadas podem ficar visíveis na tela  
-    reescreve(30, calculos[0], calculos[1], calculos[2], calculos[3], calculos[4]);
+    
 
     //Base do plano inclinado - no canvas 2 pois não precisa redesenhar
     desenhaReta((X_ZERO)-(BASE), Y_ZERO, (X_ZERO), Y_ZERO, "#FFF", 4, "2");
 
     // Ângulo inicial: 30°
     var angRadInicial = (210*CENTO_OITENTA)/180;
-    //angulos contados a partir do eixo x e caminhando no sentido horário ... por isso 30° = 210° (180° + 30°)
-    // e cento_oitenta é uma variável criada anteriormente, a partir do Pi (Math.PI)
-
-    //Preenche o ângulo com um segmento de arco, para indicar a área que ele representa    
-    // Desenhando
-    App.strategiesTela.construtorArco.executa([
-        "1",
-        X_ZERO,
-        Y_ZERO,
-        (BASE/18)*3,
-        angRadInicial,
-        CENTO_OITENTA,
-        "#FFF",
-        2
-    ]);
+    anguloRadAtualParaAnimacaoCorrigido = angRadInicial;
 
     // Coordenadas do ponto inicial para desenhar o plano inclinado
     var ponto = App.strategiesCalculadora.ponto.calcula([angRadInicial, X_ZERO, Y_ZERO, BASE]);
 
-    // Plano inclidado móvel - primeira posição: 30°
-    desenhaReta(ponto[0], ponto[1], X_ZERO, Y_ZERO, "#FFF", 4, "1");
+    reDesenha(ponto[0], ponto[1], angRadInicial);
 
-    // Coordenadas dos pontos vértices do quadrilátero (corpo sobre o plano inclinado)
-    var pontoA = App.strategiesCalculadora.ponto.calcula([angRadInicial, X_ZERO, Y_ZERO, (BASE/18)*9]);
-    var pontoB = App.strategiesCalculadora.ponto.calcula([angRadInicial, X_ZERO, Y_ZERO, (BASE/18)*12]);
-    var pontoC = App.strategiesCalculadora.ponto.calcula([angRadInicial + NOVENTA, pontoB[0], pontoB[1], (BASE/18)*3]);
-    var pontoD = App.strategiesCalculadora.ponto.calcula([angRadInicial + NOVENTA, pontoA[0], pontoA[1], (BASE/18)*3]);
-
-    desenhaReta(pontoA[0], pontoA[1], pontoB[0], pontoB[1], "#B22222", 4, "1");
-    desenhaReta(pontoB[0], pontoB[1], pontoC[0], pontoC[1], "#B22222", 4, "1");
-    desenhaReta(pontoC[0], pontoC[1], pontoD[0], pontoD[1], "#B22222", 4, "1");
-    desenhaReta(pontoA[0], pontoA[1], pontoD[0], pontoD[1], "#B22222", 4, "1");
-
-    // Ângulo entre Py e P
-    var angRetaP = CENTO_OITENTA-(DUZENTOS_SETENTA-angRadInicial)
-
-    // Coornedadas do ponto central do quadrilátero, 
-    // que será início para as retas N, P, Px e Py
-    var NovoXZero = (pontoA[0]+pontoC[0])/2
-    var NovoYZero = (pontoA[1]+pontoC[1])/2
-
-    // Coordenadas dos pontos para:
-    //  a reta que representa o sentido da força normal N ... ponto E
-    //  a reta que representa a força peso (gravidade) P ... ponto G
-    //  a reta Px ... ponto H
-    //  a reta Py ... ponto F ... comprimento de E = F e ambos precisam ser menores que G ... ajustando valores em BASE/12 para Peso e BASE/14 para N  e BASE/24 para Px
-    var pontoE = App.strategiesCalculadora.ponto.calcula([angRadInicial + NOVENTA, NovoXZero, NovoYZero, (BASE_Py_inicial/14)*4]);
-    var pontoF = App.strategiesCalculadora.ponto.calcula([angRadInicial - NOVENTA, NovoXZero, NovoYZero, (BASE_Py_inicial/14)*4]);
-    var pontoG = App.strategiesCalculadora.ponto.calcula([angRadInicial - angRetaP, NovoXZero, NovoYZero, (BASE/14)*4]);
-    var pontoH = App.strategiesCalculadora.ponto.calcula([angRadInicial - CENTO_OITENTA, NovoXZero, NovoYZero, (BASE_Px_inicial/14)*4]);
-
-    var pontoI = App.strategiesCalculadora.ponto.calcula([angRadInicial + NOVENTA - (TRINTA/10), NovoXZero, NovoYZero, (BASE_Py_inicial/14)*3.5]);
-    var pontoJ = App.strategiesCalculadora.ponto.calcula([angRadInicial + NOVENTA + (TRINTA/10), NovoXZero, NovoYZero, (BASE_Py_inicial/14)*3.5]);
-    var pontoK = App.strategiesCalculadora.ponto.calcula([angRadInicial - NOVENTA - (TRINTA/10), NovoXZero, NovoYZero, (BASE_Py_inicial/14)*3.5]);
-    var pontoL = App.strategiesCalculadora.ponto.calcula([angRadInicial - NOVENTA + (TRINTA/10), NovoXZero, NovoYZero, (BASE_Py_inicial/14)*3.5]);
-    var pontoM = App.strategiesCalculadora.ponto.calcula([angRadInicial - angRetaP - (TRINTA/10), NovoXZero, NovoYZero, (BASE/14)*3.5]);
-    var pontoN = App.strategiesCalculadora.ponto.calcula([angRadInicial - angRetaP + (TRINTA/10), NovoXZero, NovoYZero, (BASE/14)*3.5]);
-    var pontoO = App.strategiesCalculadora.ponto.calcula([angRadInicial - CENTO_OITENTA - (TRINTA/10), NovoXZero, NovoYZero, (BASE_Px_inicial/14)*3.5]);
-    var pontoP = App.strategiesCalculadora.ponto.calcula([angRadInicial - CENTO_OITENTA + (TRINTA/10), NovoXZero, NovoYZero, (BASE_Px_inicial/14)*3.5]);
-
-    // Reta - Força N e seta
-    desenhaReta(NovoXZero, NovoYZero, pontoE[0], pontoE[1], "#0F0", 3, "1");
-    desenhaReta(pontoI[0], pontoI[1], pontoE[0], pontoE[1], "#0F0", 3, "1");
-    desenhaReta(pontoJ[0], pontoJ[1], pontoE[0], pontoE[1], "#0F0", 3, "1");
-
-    // Reta - Px
-    desenhaReta(NovoXZero, NovoYZero, pontoH[0], pontoH[1], "#0fc", 3, "1");
-    desenhaReta(pontoO[0], pontoO[1], pontoH[0], pontoH[1], "#0fc", 3, "1");
-    desenhaReta(pontoP[0], pontoP[1], pontoH[0], pontoH[1], "#0fc", 3, "1");
-
-    // Reta - Py
-    desenhaReta(NovoXZero, NovoYZero, pontoF[0], pontoF[1], "#96f", 3, "1");
-    desenhaReta(pontoK[0], pontoK[1], pontoF[0], pontoF[1], "#96f", 3, "1");
-    desenhaReta(pontoL[0], pontoL[1], pontoF[0], pontoF[1], "#96f", 3, "1");
-
-    // Reta - P
-    desenhaReta(NovoXZero, NovoYZero, pontoG[0], pontoG[1], "#DAA520", 3, "1");
-    desenhaReta(pontoM[0], pontoM[1], pontoG[0], pontoG[1], "#DAA520", 3, "1");
-    desenhaReta(pontoN[0], pontoN[1], pontoG[0], pontoG[1], "#DAA520", 3, "1");
-
-    escreveForcas(pontoE, pontoF, pontoG, pontoH);
-
-     // Retas Pontilhadas
-     var pontoQ = [pontoG[0], pontoG[1]];
-
-     var pontoR = App.strategiesCalculadora.pontoPxPy.calcula([NovoXZero, NovoYZero, pontoH[0], pontoH[1], angRadInicial + NOVENTA, pontoQ[0], pontoQ[1]]);
-     desenhaReta(pontoQ[0], pontoQ[1], pontoR[0], pontoR[1], "#DAA520", 1, "1");
- 
-     var pontoS = App.strategiesCalculadora.pontoPxPy.calcula([NovoXZero, NovoYZero, pontoF[0], pontoF[1], angRadInicial, pontoQ[0], pontoQ[1]]);
-     desenhaReta(pontoQ[0], pontoQ[1], pontoS[0], pontoS[1], "#DAA520", 1, "1");
+    var calculos = calculaForcasAceleracao((30*CENTO_OITENTA)/180);  
+    // linha a seguir determina quantas variáveis calculadas podem ficar visíveis na tela  
+    reescreve(30, calculos[0], calculos[1], calculos[2], calculos[3], calculos[4]);
+    
+    // Guarda dados iniciais para animação
+    aceleracaoAtualParaAnimacao = calculos[4];
   }
 
   var reescreve = function(angulo, p, px, py, n, a){
+
+    // Guarda para a animação
+    anguloRadAtualParaAnimacao = (angulo*CENTO_OITENTA)/180;
+    anguloGrauAtualParaAnimacao = angulo;
+    aceleracaoAtualParaAnimacao = a;
 
     var mensagem = angulo + "°";
     App.strategiesTela.construtorTexto.executa([
@@ -427,13 +411,21 @@ App.aplicacoes = (function ()
     var py = p * Math.cos(angRad);
     var n = p * Math.cos(angRad);
     var a = g * Math.sin(angRad);
-    var BASE_Py = (objCanvas.canvasWidth)/(reduzdimensao/py);
-    var BASE_Px = (objCanvas.canvasWidth)/(reduzdimensao/px);
+    BASE_Py = (objCanvas.canvasWidth)/(reduzdimensao/py);
+    BASE_Px = (objCanvas.canvasWidth)/(reduzdimensao/px);
       
     //limpeza inicial da tela, para reconstrução
     //somente o canvas superior
     App.strategiesTela.limpaTela.executa([
       "1",
+      0,
+      0,
+      objCanvas.canvasWidth,
+      objCanvas.canvasHeight,
+    ]);
+
+    App.strategiesTela.limpaTela.executa([
+      "3",
       0,
       0,
       objCanvas.canvasWidth,
@@ -454,23 +446,53 @@ App.aplicacoes = (function ()
           CENTO_OITENTA,
           "#FFF",
           3
-      ]);        
+      ]);      
     }
 
     //
     desenhaReta(X_ZERO, Y_ZERO, pontoX, pontoY, "#FFF", 4, "1");
 
-    // Coordenadas do ponto inicial para desenhar a base do corpo sobre o plano
-    var pontoA = App.strategiesCalculadora.ponto.calcula([angRad, X_ZERO, Y_ZERO, (BASE/18)*9]);
-    var pontoB = App.strategiesCalculadora.ponto.calcula([angRad, X_ZERO, Y_ZERO, (BASE/18)*12]);
-    var pontoC = App.strategiesCalculadora.ponto.calcula([angRad + NOVENTA, pontoB[0], pontoB[1], (BASE/18)*3]);
-    var pontoD = App.strategiesCalculadora.ponto.calcula([angRad + NOVENTA, pontoA[0], pontoA[1], (BASE/18)*3]);
+    // Coordenadas dos pontos para desenhar o corpo sobre o plano
+    pontoA = App.strategiesCalculadora.ponto.calcula([angRad, X_ZERO, Y_ZERO, (BASE/18)*9]);
+    pontoB = App.strategiesCalculadora.ponto.calcula([angRad, X_ZERO, Y_ZERO, (BASE/18)*12]);
+    pontoC = App.strategiesCalculadora.ponto.calcula([angRad + NOVENTA, pontoB[0], pontoB[1], (BASE/18)*3]);
+    pontoD = App.strategiesCalculadora.ponto.calcula([angRad + NOVENTA, pontoA[0], pontoA[1], (BASE/18)*3]);
 
-    desenhaReta(pontoA[0], pontoA[1], pontoB[0], pontoB[1], "#B22222", 4, "1");
-    desenhaReta(pontoB[0], pontoB[1], pontoC[0], pontoC[1], "#B22222", 4, "1");
-    desenhaReta(pontoC[0], pontoC[1], pontoD[0], pontoD[1], "#B22222", 4, "1");
-    desenhaReta(pontoA[0], pontoA[1], pontoD[0], pontoD[1], "#B22222", 4, "1");
+    // desenha o corpo sobre o plano
+    desenhaCorpo(pontoA, pontoB, pontoC, pontoD, "#e01010");
 
+    // Desenha as forças
+    desenhaForcas(angRad, pontoA, pontoC, BASE_Px, BASE_Py);    
+
+  }// Fim Função Redesenha
+
+  // Função que chama o contrutor reta, passando os parâmetros recebidos
+  var desenhaReta = function (pontoXo, pontoYo, pontoX, pontoY, cor, espessura, canvas){
+
+    App.strategiesTela.construtorReta.executa([
+      canvas,
+      pontoXo,
+      pontoYo,
+      pontoX,
+      pontoY,
+      cor,
+      espessura
+    ]);
+  }
+
+  var desenhaCorpo = function (pontoA, pontoB, pontoC, pontoD, cor){
+    objCanvas.ctx3.beginPath();
+    objCanvas.ctx3.fillStyle=cor;
+    objCanvas.ctx3.moveTo(pontoA[0], pontoA[1]);
+    objCanvas.ctx3.lineTo(pontoB[0], pontoB[1]);
+    objCanvas.ctx3.lineTo(pontoC[0], pontoC[1]);
+    objCanvas.ctx3.lineTo(pontoD[0], pontoD[1]);
+    objCanvas.ctx3.lineTo(pontoA[0], pontoA[1]);    
+    objCanvas.ctx3.fill();
+    objCanvas.ctx3.closePath();
+  }
+
+  var desenhaForcas = function(angRad, pontoA, pontoC, BASE_Px, BASE_Py){
     // Ângulo entre Py e P
     var angRetaP = CENTO_OITENTA-(DUZENTOS_SETENTA-angRad)
 
@@ -499,24 +521,24 @@ App.aplicacoes = (function ()
     var pontoP = App.strategiesCalculadora.ponto.calcula([angRad + (TRINTA/10), NovoXZero, NovoYZero, (BASE_Px/14)*3.5]);
 
     // Reta - Força N e seta
-    desenhaReta(NovoXZero, NovoYZero, pontoE[0], pontoE[1], "#0F0", 3, "1");
-    desenhaReta(pontoI[0], pontoI[1], pontoE[0], pontoE[1], "#0F0", 3, "1");
-    desenhaReta(pontoJ[0], pontoJ[1], pontoE[0], pontoE[1], "#0F0", 3, "1");
+    desenhaReta(NovoXZero, NovoYZero, pontoE[0], pontoE[1], "#0F0", 3, "3");
+    desenhaReta(pontoI[0], pontoI[1], pontoE[0], pontoE[1], "#0F0", 3, "3");
+    desenhaReta(pontoJ[0], pontoJ[1], pontoE[0], pontoE[1], "#0F0", 3, "3");
 
     // Reta - Px
-    desenhaReta(NovoXZero, NovoYZero, pontoH[0], pontoH[1], "#0fc", 3, "1");
-    desenhaReta(pontoO[0], pontoO[1], pontoH[0], pontoH[1], "#0fc", 3, "1");
-    desenhaReta(pontoP[0], pontoP[1], pontoH[0], pontoH[1], "#0fc", 3, "1");
+    desenhaReta(NovoXZero, NovoYZero, pontoH[0], pontoH[1], "#0fc", 3, "3");
+    desenhaReta(pontoO[0], pontoO[1], pontoH[0], pontoH[1], "#0fc", 3, "3");
+    desenhaReta(pontoP[0], pontoP[1], pontoH[0], pontoH[1], "#0fc", 3, "3");
 
     // Reta - Py
-    desenhaReta(NovoXZero, NovoYZero, pontoF[0], pontoF[1], "#96f", 3, "1");
-    desenhaReta(pontoK[0], pontoK[1], pontoF[0], pontoF[1], "#96f", 3, "1");
-    desenhaReta(pontoL[0], pontoL[1], pontoF[0], pontoF[1], "#96f", 3, "1");
+    desenhaReta(NovoXZero, NovoYZero, pontoF[0], pontoF[1], "#96f", 3, "3");
+    desenhaReta(pontoK[0], pontoK[1], pontoF[0], pontoF[1], "#96f", 3, "3");
+    desenhaReta(pontoL[0], pontoL[1], pontoF[0], pontoF[1], "#96f", 3, "3");
 
     // Reta - P
-    desenhaReta(NovoXZero, NovoYZero, pontoG[0], pontoG[1], "#DAA520", 3, "1");
-    desenhaReta(pontoM[0], pontoM[1], pontoG[0], pontoG[1], "#DAA520", 3, "1");
-    desenhaReta(pontoN[0], pontoN[1], pontoG[0], pontoG[1], "#DAA520", 3, "1");
+    desenhaReta(NovoXZero, NovoYZero, pontoG[0], pontoG[1], "#DAA520", 3, "3");
+    desenhaReta(pontoM[0], pontoM[1], pontoG[0], pontoG[1], "#DAA520", 3, "3");
+    desenhaReta(pontoN[0], pontoN[1], pontoG[0], pontoG[1], "#DAA520", 3, "3");
 
     escreveForcas(pontoE, pontoF, pontoG, pontoH);
 
@@ -524,31 +546,15 @@ App.aplicacoes = (function ()
     var pontoQ = [pontoG[0], pontoG[1]];
 
     var pontoR = App.strategiesCalculadora.pontoPxPy.calcula([NovoXZero, NovoYZero, pontoH[0], pontoH[1], angRad + NOVENTA, pontoQ[0], pontoQ[1]]);
-    desenhaReta(pontoQ[0], pontoQ[1], pontoR[0], pontoR[1], "#DAA520", 1, "1");
+    desenhaReta(pontoQ[0], pontoQ[1], pontoR[0], pontoR[1], "#DAA520", 1, "3");
 
     var pontoS = App.strategiesCalculadora.pontoPxPy.calcula([NovoXZero, NovoYZero, pontoF[0], pontoF[1], angRad, pontoQ[0], pontoQ[1]]);
-    desenhaReta(pontoQ[0], pontoQ[1], pontoS[0], pontoS[1], "#DAA520", 1, "1");
-
-
-  }// Fim Função Redesenha
-
-  // Função que chama o contrutor reta, passando os parâmetros recebidos
-  var desenhaReta = function (pontoXo, pontoYo, pontoX, pontoY, cor, espessura, canvas){
-
-    App.strategiesTela.construtorReta.executa([
-      canvas,
-      pontoXo,
-      pontoYo,
-      pontoX,
-      pontoY,
-      cor,
-      espessura
-    ]);
+    desenhaReta(pontoQ[0], pontoQ[1], pontoS[0], pontoS[1], "#DAA520", 1, "3");
   }
 
   var escreveForcas = function (pontoE, pontoF, pontoG, pontoH){
     App.strategiesTela.construtorTexto.executa([
-      "1",
+      "3",
       "N",
       "#0f0",
       "Bold 14px Trebuchet MS",
@@ -557,7 +563,7 @@ App.aplicacoes = (function ()
     ]);
 
     App.strategiesTela.construtorTexto.executa([
-      "1",
+      "3",
       "Px",
       "#0fc",
       "Bold 14px Trebuchet MS",
@@ -566,7 +572,7 @@ App.aplicacoes = (function ()
     ]);
 
     App.strategiesTela.construtorTexto.executa([
-      "1",
+      "3",
       "Py",
       "#96f",
       "Bold 14px Trebuchet MS",
@@ -575,7 +581,7 @@ App.aplicacoes = (function ()
     ]);
 
     App.strategiesTela.construtorTexto.executa([
-      "1",
+      "3",
       "P",
       "#DAA520",
       "Bold 14px Trebuchet MS",
@@ -584,7 +590,7 @@ App.aplicacoes = (function ()
     ]);
   }
 
-  var calculaForcasAceleracao = function(angFinal){
+  var calculaForcasAceleracao = function(angFinal){ 
 /*
       Ângulo entre o Plano Móvel e a Base: 
 
@@ -612,6 +618,128 @@ App.aplicacoes = (function ()
       return [parseFloat(p).toFixed(1), parseFloat(px).toFixed(1), parseFloat(py).toFixed(1), parseFloat(n).toFixed(1), parseFloat(a).toFixed(1)];
 
   }
+
+  // Calcula o deslocamento na diagonal, e a partir dele a variação das coordenadas do ponto (X, Y)
+  var calculaPosicaoNoTempo = function(seno, cosseno){
+    if(initialTime == null || initialTime == "undefined"){ // não esquecer de limpar ao parar a animação!
+      initialTime = Date.now();    
+    }    
+    currentTime = Date.now();    
+
+    // A posição é com base no vértice do corpo que fica rente à superfície do plano inclinado e à esquerda
+    // S = deslocamento sobre o plano inclinado - hipotenusa
+    // ca = variação de X - cateto adjacente
+    // co = variação de Y - cateto oposto
+    // S = S0 + V0t + a.t²
+
+    var S0 = 0; // Posição inicial é sempre 0
+    var V0 = 0; // Velocidade inicial é sempre 0
+    var t = (currentTime - initialTime)/1000;
+
+    // Posição inicial é sempre Zero, pois vamos considerar como se fosse o o movimento sempre a partir do ponto inicial
+    // O mesmo vale para a velocidade inicial, sempre zero, pela mesma razão.
+    // O tempo atualizado com a aceleração vão garantir o espaço e velocidade corretos no fim
+    var S = 0 + 0*t + aceleracaoAtualParaAnimacao * Math.pow(t, 2);
+    var ca = cosseno * (S * 3779.527559); // Somar à coordenada X dos pontos para redesenhar
+    var co = seno * (S * 3779.527559); // Somar à coordenada Y dos pontos para redesenhar
+    
+    return [ca, co];
+  }
+
+  var animarBloco = function (){
+
+    document.getElementById("animar").disabled = true;
+    document.getElementById("voltar").disabled = true;
+
+    //desvincula os eventos existentes (todos os keydowns)
+    objCanvas.doc.unbind("keydown");
+
+    // Ao chamar ANIMAR, bloquear TODOS os botões, inclusive do MENU, para não ter interferência em outras telas
+    // Ao terminar animação, limpar as variáveis da animação e desbloquear os botões.
+
+    if(anguloGrauAtualParaAnimacao === 0) {
+      document.getElementById("animar").disabled = false;
+      ajustaKeyDown();
+      return; // Se o ângulo for zero, o bloco não se mexe
+    }
+
+    var senoAngulo = Math.sin(anguloRadAtualParaAnimacao);
+    var cossenoAngulo = Math.cos(anguloRadAtualParaAnimacao);
+
+    var deslocamento = calculaPosicaoNoTempo(senoAngulo, cossenoAngulo);
+    // Mover lógica toda de calculo das coordenadas para os desenhos do redesenha, incluindo calculo dos pontos, para um método
+    // A referência sempre será os pontos originais iniciais, e o deslocamento é que será maior a cada iteração
+    var pontoA1 = [pontoA[0] + deslocamento[0], pontoA[1] + deslocamento[1]];
+    var pontoB1 = [pontoB[0] + deslocamento[0], pontoB[1] + deslocamento[1]];
+    var pontoC1 = [pontoC[0] + deslocamento[0], pontoC[1] + deslocamento[1]];
+    var pontoD1 = [pontoD[0] + deslocamento[0], pontoD[1] + deslocamento[1]];
+    
+    // limpa o corpo todo
+    //limpeza inicial da tela, para reconstrução // Criar um canvas só para o bloco! QUw só ficará em primeiro plano nessa tela
+    App.strategiesTela.limpaTela.executa([
+      "3",
+      0,
+      0,
+      objCanvas.canvasWidth,
+      objCanvas.canvasHeight
+    ]);
+
+    // desenha o corpo sobre o plano
+    desenhaCorpo(pontoA1, pontoB1, pontoC1, pontoD1, "#e01010");
+
+    // Desenha as forças
+    desenhaForcas(anguloRadAtualParaAnimacaoCorrigido, pontoA1, pontoC1, BASE_Px, BASE_Py);
+
+    // Solicita a próxima animação somente enquanto o bloco estiver no limite do plano inclinado
+    var parar = pontoA1[1] >= Y_ZERO + 500 || pontoA1[0] >= X_ZERO + 700;
+
+    if(parar){ // TODO Fazer a validação correta aqui 
+      document.getElementById("voltar").disabled = false;
+    }
+    else{
+      animacao = requestAnimationFrame(animarBloco);      
+    }
+  }
+
+  var finalizaAnimacaoBloco = function (){
+
+    pararAnima();
+
+    // Quando o vértice do bloco coincidir com o vértice do ângulo do plano, pára!
+    // Desbloquear os botões todos
+
+    // anulando initialTime e currentTime
+    initialTime = null;
+    currentTime = null;
+    
+    // limpa o corpo todo
+    //limpeza inicial da tela, para reconstrução // Criar um canvas só para o bloco! QUw só ficará em primeiro plano nessa tela
+    App.strategiesTela.limpaTela.executa([
+      "3",
+      0,
+      0,
+      objCanvas.canvasWidth,
+      objCanvas.canvasHeight
+    ]);
+
+    // volta o corpor para a posição inicial aqui -- isso precisa ficar num método chamado por botão!
+    desenhaCorpo(pontoA, pontoB, pontoC, pontoD, "#e01010");
+
+    // Desenha as forças
+    desenhaForcas(anguloRadAtualParaAnimacaoCorrigido, pontoA, pontoC, BASE_Px, BASE_Py);
+
+    document.getElementById("animar").disabled = false;
+    document.getElementById("voltar").disabled = true;
+
+    ajustaKeyDown();
+  }
+
+
+
+  //----------------------------------------------------------------------------------------
+  //----------------------------------------------------------------------------------------
+  // ------------------------ Funções de Eventos do Teclado e Mouse ------------------------
+  //----------------------------------------------------------------------------------------
 
   // Fora da função, pois deve guardar o valor final dentro da função
   // Limitando o ângulo na tela entre 0° a 50°
@@ -685,6 +813,8 @@ App.aplicacoes = (function ()
       reDesenha(ponto[0], ponto[1], angRad);
       // linha a seguir determina quantas variáveis calculadas podem ficar visíveis na tela  
       reescreve(angFinal-180, calculos[0], calculos[1], calculos[2], calculos[3], calculos[4]);
+
+      anguloRadAtualParaAnimacaoCorrigido = angRad;
     });
   } //Fim ajustaKeydown
 
@@ -701,6 +831,7 @@ App.aplicacoes = (function ()
     Retorno: função inicio -> ponto de acesso ao módulo
   */
   return {
-    inicio: inicio //única função visível externamente ao módulo
+    inicio: inicio, //única função visível externamente ao módulo
+    pararAnimacao: pararAnima
   }
 })();
