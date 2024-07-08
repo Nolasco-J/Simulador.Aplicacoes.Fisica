@@ -36,12 +36,14 @@
 		<!-- Central -->
 		<div id="main" class="mainArea">
 			<div id="divCanvas" class="divCanvas">
-				<canvas id="cvTrigonometrando" class="objectCanvas" width="100" height="100" style="position: absolute; z-index: 2;">
+				<canvas id="cvTrigonometrando" class="objectCanvas" width="100" height="100" style="position: absolute; z-index: 3;">
 					<p class="avisoP">Navegador incompatível!</p>
 					<p class="avisoP">Por favor, atualize seu navegador para uma </p>
 				   <p class="avisoP">versão mais recente ou tente utilizar outro.</p>
 				</canvas>
-				<canvas id="cvTrigonometrando2" class="objectCanvas" width="100" height="100" style="position: absolute; z-index: 1;">
+				<canvas id="cvTrigonometrando2" class="objectCanvas" width="100" height="100" style="position: absolute; z-index: 2;">
+				</canvas>
+				<canvas id="cvTrigonometrando3" class="objectCanvas" width="100" height="100" style="position: absolute; z-index: 10;">
 				</canvas>
 				<div id="divEspelhoControles" class="espelhoControles" width="650" height="100" >
 					<canvas id="plot" width="500" height="450">
@@ -57,6 +59,12 @@
 						<input type="text" name="posy" min="0" max="150" value="0" id="pos-y" class="posy" disabled>
 					</form>				
 				</div>
+				<div id="divControlesAnima" class="divControles-ng" width="100" height="100">
+					<form id="form-counters">
+						<button type="button" id="animar" class="btn-posy-ng">Animar</button>
+						<button type="button" id="voltar" class="btn-posy-ng">Voltar</button>						
+					</form>				
+				</div>
 			</div>	 		
 			 <div id="menu" class="menu">
 				<!--Botões do menu principal-->				
@@ -68,6 +76,7 @@
 				<button class="menuButton" onclick="App.espelho.inicio();"><p>Reflexão da Luz</p></button>
 				<button class="menuButton" onclick="App.creditos.inicio();"><p>Créditos</p></button>
 				<button class="menuButton" onclick="App.principal.inicio();"><p>Início</p></button>
+				
 			 </div>
 	 	</div> 		
  	</div>
