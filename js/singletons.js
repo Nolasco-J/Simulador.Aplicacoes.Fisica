@@ -40,6 +40,9 @@ $(document).ready( function()
           var CV2 = $("#cvTrigonometrando2");
           var CONTEXT2 = CV2.get(0).getContext("2d");
 
+          var CV3 = $("#cvTrigonometrando3");
+          var CONTEXT3 = CV3.get(0).getContext("2d");
+
           var CT = $(CV1).parent(); // Elemento pai do Canvas ---> uma div
           var CV_WIDTH = ($(CT).width() - 1);
           var CV_HEIGHT = $(CT).height();
@@ -57,6 +60,9 @@ $(document).ready( function()
 
                 CV2.attr("width", $(CT).width() - 10); //largura máxima
                 CV2.attr("height", $(CT).height() - 10);  //altura máxima
+
+                CV3.attr("width", $(CT).width() - 10); //largura máxima
+                CV3.attr("height", $(CT).height() - 10);  //altura máxima
               },
 
             // atributos / objetos públicos
@@ -64,10 +70,12 @@ $(document).ready( function()
             doc: DOCUMENTO,
             ctx1: CONTEXT1,
             ctx2: CONTEXT2,
+            ctx3: CONTEXT3,
             canvasWidth: CV_WIDTH,
             canvasHeight: CV_HEIGHT,
             canvas1: CV1,
-            canvas2: CV2
+            canvas2: CV2,
+            canvas3: CV3
           }
         }
 
