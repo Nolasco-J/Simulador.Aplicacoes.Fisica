@@ -32,6 +32,7 @@ App.graficos = (function ()
     //instância de singletons
     objCanvas = App.singletons.singletonCanvas.getInstancia();
     objImagens = App.singletons.singletonImagens.getInstancia();
+    document.getElementById("cvTrigonometrando3").style.display = 'none';
 
     //constantes para serem usadas pelas funções
     X_ZERO = objCanvas.canvasWidth/4 + objCanvas.canvasWidth/20 - 130;
@@ -51,8 +52,11 @@ App.graficos = (function ()
   {
     document.getElementById("divEspelhoControles").style.display = 'none';
     document.getElementById("divControles").style.display = 'none';
+    document.getElementById("divControlesAnima").style.display = 'none';
+    document.getElementById("cvTrigonometrando3").style.display = 'none';
 
     App.teoria.pararAnimacao();//se houver algo rodando, pára
+    App.aplicacoes.pararAnimacao();//se houver algo rodando, pára
 
     //quando início é executado, a primeira tela do módulo é printada
     //aqui, indica que é a primeira tela
