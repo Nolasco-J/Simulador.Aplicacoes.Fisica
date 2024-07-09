@@ -61,7 +61,7 @@ $(document).ready( function()
                 CV2.attr("width", $(CT).width() - 10); //largura máxima
                 CV2.attr("height", $(CT).height() - 10);  //altura máxima
 
-                CV3.attr("width", $(CT).width() - 10); //largura máxima
+                CV3.attr("width", $(CT).width()/2 + 1); //largura máxima
                 CV3.attr("height", $(CT).height() - 10);  //altura máxima
               },
 
