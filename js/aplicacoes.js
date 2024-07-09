@@ -156,10 +156,10 @@ App.aplicacoes = (function ()
     App.strategiesTela.construtorCorFundo.executa([
       "2",
       "#006",
-      objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22,
+      objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 - 40,
       140,
-      objCanvas.canvasWidth/2 - objCanvas.canvasWidth/8,
-      objCanvas.canvasHeight/2 + objCanvas.canvasHeight/15
+      objCanvas.canvasWidth/2 - objCanvas.canvasWidth/8 + 40,
+      objCanvas.canvasHeight/2 + objCanvas.canvasHeight/15 - 30
     ]);
 
     /*
@@ -200,7 +200,7 @@ App.aplicacoes = (function ()
         mensagem,
         "#0fc",
         "Bold 16px Trebuchet MS",
-        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)),
+        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)) - 25,
         170
       ]);
 
@@ -210,7 +210,7 @@ App.aplicacoes = (function ()
         mensagem,
         "#0fc",
         "Bold 16px Trebuchet MS",
-        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)),
+        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)) - 25,
         195
       ]);
 
@@ -220,7 +220,7 @@ App.aplicacoes = (function ()
         mensagem,
         "#FFF",
         "Bold 16px Trebuchet MS",
-        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)*18),
+        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)*18) - 25,
         // *7 se refere à posição horizontal e 250 à posição vertical
         195
       ]);
@@ -231,7 +231,7 @@ App.aplicacoes = (function ()
         mensagem,
         "#0fc",
         "Bold 16px Trebuchet MS",
-        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)),
+        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)) - 25,
         220
       ]);
       mensagem = "Componente Px da Força Peso: ";
@@ -240,7 +240,7 @@ App.aplicacoes = (function ()
         mensagem,
         "#0fc",
         "Bold 16px Trebuchet MS",
-        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)),
+        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)) - 25,
         245
       ]);
       
@@ -250,7 +250,7 @@ App.aplicacoes = (function ()
         mensagem,
         "#0fc",
         "Bold 16px Trebuchet MS",
-        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)),
+        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)) - 25,
         270
       ]);
 
@@ -260,7 +260,7 @@ App.aplicacoes = (function ()
         mensagem,
         "#0fc",
         "Bold 16px Trebuchet MS",
-        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)),
+        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)) - 25,
         295
       ]);
 
@@ -270,8 +270,8 @@ App.aplicacoes = (function ()
         mensagem,
         "#0fc",
         "Bold 16px Trebuchet MS",
-        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)),
-        320
+        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)) + 165,
+        295
       ]);
 
       mensagem = "Considerando: ";
@@ -280,8 +280,8 @@ App.aplicacoes = (function ()
         mensagem,
         "#0fc",
         "Bold 16px Trebuchet MS",
-        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)),
-        360
+        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)) - 25,
+        330
       ]);
 
       mensagem = "Aceleração da gravidade: 9,8m/s²";
@@ -290,8 +290,8 @@ App.aplicacoes = (function ()
         mensagem,
         "#0fc",
         "Bold 16px Trebuchet MS",
-        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)),
-        385
+        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)) - 25,
+        352
       ]);
 
       mensagem = "Sem atrito.";
@@ -300,8 +300,8 @@ App.aplicacoes = (function ()
         mensagem,
         "#0fc",
         "Bold 16px Trebuchet MS",
-        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)),
-        410
+        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)) - 25,
+        374
       ]);
     
 
@@ -338,7 +338,7 @@ App.aplicacoes = (function ()
       mensagem,
       "#FFF",
       "Bold 16px Trebuchet MS",
-      objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)*15),
+      objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)*15) - 20,
       170
     ]);
 
@@ -348,7 +348,7 @@ App.aplicacoes = (function ()
       mensagem,
       "#FFF",
       "Bold 16px Trebuchet MS",
-      objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)*5),
+      objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)*5) - 20,
       220
     ]);
 
@@ -358,7 +358,7 @@ App.aplicacoes = (function ()
       mensagem,
       "#FFF",
       "Bold 16px Trebuchet MS",
-      objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)*12),
+      objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)*12) - 20,
       245
     ]);
 
@@ -368,7 +368,7 @@ App.aplicacoes = (function ()
       mensagem,
       "#FFF",
       "Bold 16px Trebuchet MS",
-      objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)*12),
+      objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)*12) - 20,
       270
     ]);
 
@@ -378,7 +378,7 @@ App.aplicacoes = (function ()
       mensagem,
       "#FFF",
       "Bold 16px Trebuchet MS",
-      objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)*6),
+      objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)*6) - 20,
       295
     ]);
 
@@ -388,8 +388,8 @@ App.aplicacoes = (function ()
       mensagem,
       "#FFFS",
       "Bold 16px Trebuchet MS",
-      objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)*5),
-      320
+      objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)*5) + 170,
+      295
     ]);
   }
 
