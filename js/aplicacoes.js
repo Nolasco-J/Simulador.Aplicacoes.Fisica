@@ -639,7 +639,7 @@ App.aplicacoes = (function ()
     // Posição inicial é sempre Zero, pois vamos considerar como se fosse o o movimento sempre a partir do ponto inicial
     // O mesmo vale para a velocidade inicial, sempre zero, pela mesma razão.
     // O tempo atualizado com a aceleração vão garantir o espaço e velocidade corretos no fim
-    var S = 0 + 0*t + aceleracaoAtualParaAnimacao * Math.pow(t, 2);
+    var S = 0 + 0*t + 0.5 * aceleracaoAtualParaAnimacao * Math.pow(t, 2);
     var ca = cosseno * (S * 3779.527559); // Somar à coordenada X dos pontos para redesenhar
     var co = seno * (S * 3779.527559); // Somar à coordenada Y dos pontos para redesenhar
     
@@ -691,7 +691,7 @@ App.aplicacoes = (function ()
     desenhaForcas(anguloRadAtualParaAnimacaoCorrigido, pontoA1, pontoC1, BASE_Px, BASE_Py);
 
     // Solicita a próxima animação somente enquanto o bloco estiver no limite do plano inclinado
-    var parar = pontoA1[1] >= Y_ZERO + 500 || pontoA1[0] >= X_ZERO + 700;
+    var parar = pontoA1[1] >= Y_ZERO + 150 || pontoA1[0] >= X_ZERO + 200;
 
     if(parar){ // TODO Fazer a validação correta aqui 
       document.getElementById("voltar").disabled = false;
