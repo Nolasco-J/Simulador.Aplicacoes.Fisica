@@ -634,7 +634,7 @@ App.aplicacoes = (function ()
 
     var S0 = 0; // Posição inicial é sempre 0
     var V0 = 0; // Velocidade inicial é sempre 0
-    var t = (currentTime - initialTime)/1000;
+    var t = (currentTime - initialTime)/10000;
 
     // Posição inicial é sempre Zero, pois vamos considerar como se fosse o o movimento sempre a partir do ponto inicial
     // O mesmo vale para a velocidade inicial, sempre zero, pela mesma razão.
