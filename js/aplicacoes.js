@@ -201,7 +201,7 @@ App.aplicacoes = (function ()
         "#0fc",
         "Bold 16px Trebuchet MS",
         objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)) - 25,
-        170
+        160
       ]);
 
       mensagem = "Massa do corpo sobre o plano inclinado:";
@@ -211,7 +211,7 @@ App.aplicacoes = (function ()
         "#0fc",
         "Bold 16px Trebuchet MS",
         objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)) - 25,
-        195
+        185
       ]);
 
       mensagem = "10.0 kg";
@@ -222,7 +222,7 @@ App.aplicacoes = (function ()
         "Bold 16px Trebuchet MS",
         objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)*18) - 25,
         // *7 se refere à posição horizontal e 250 à posição vertical
-        195
+        185
       ]);
 
       mensagem = "Força Peso: ";
@@ -232,7 +232,7 @@ App.aplicacoes = (function ()
         "#0fc",
         "Bold 16px Trebuchet MS",
         objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)) - 25,
-        220
+        210
       ]);
       mensagem = "Componente Px da Força Peso: ";
       App.strategiesTela.construtorTexto.executa([
@@ -241,7 +241,7 @@ App.aplicacoes = (function ()
         "#0fc",
         "Bold 16px Trebuchet MS",
         objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)) - 25,
-        245
+        235
       ]);
       
       mensagem = "Componente Py da Força Peso: ";
@@ -251,7 +251,7 @@ App.aplicacoes = (function ()
         "#0fc",
         "Bold 16px Trebuchet MS",
         objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)) - 25,
-        270
+        260
       ]);
 
       mensagem = "Força Normal: ";
@@ -261,7 +261,7 @@ App.aplicacoes = (function ()
         "#0fc",
         "Bold 16px Trebuchet MS",
         objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)) - 25,
-        295
+        285
       ]);
 
       mensagem = "Aceleração: ";
@@ -271,8 +271,20 @@ App.aplicacoes = (function ()
         "#0fc",
         "Bold 16px Trebuchet MS",
         objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)) + 165,
-        295
+        285
       ]);
+
+      mensagem = "Força de Atrito: ";
+      App.strategiesTela.construtorTexto.executa([
+        "2",
+        mensagem,
+        "#0fc",
+        "Bold 16px Trebuchet MS",
+        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)) - 25,
+        310
+      ]);
+
+      //-----------------------------------------------------------------------------------------------------
 
       mensagem = "Considerando: ";
       App.strategiesTela.construtorTexto.executa([
@@ -281,7 +293,7 @@ App.aplicacoes = (function ()
         "#0fc",
         "Bold 16px Trebuchet MS",
         objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)) - 25,
-        330
+        336
       ]);
 
       mensagem = "Aceleração da gravidade: 9,8m/s²";
@@ -291,20 +303,19 @@ App.aplicacoes = (function ()
         "#0fc",
         "Bold 16px Trebuchet MS",
         objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)) - 25,
-        352
+        358
       ]);
 
-      mensagem = "Sem atrito.";
+      mensagem = "Coeficiente de Atrito μ = 0,01";
       App.strategiesTela.construtorTexto.executa([
         "2",
         mensagem,
         "#0fc",
         "Bold 16px Trebuchet MS",
         objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/22)) - 25,
-        374
+        380
       ]);
     
-
     //Base do plano inclinado - no canvas 2 pois não precisa redesenhar
     desenhaReta((X_ZERO)-(BASE), Y_ZERO, (X_ZERO), Y_ZERO, "#FFF", 4, "2");
 
@@ -319,13 +330,23 @@ App.aplicacoes = (function ()
 
     var calculos = calculaForcasAceleracao((30*CENTO_OITENTA)/180);  
     // linha a seguir determina quantas variáveis calculadas podem ficar visíveis na tela  
-    reescreve(30, calculos[0], calculos[1], calculos[2], calculos[3], calculos[4]);
+    reescreve(30, calculos[0], calculos[1], calculos[2], calculos[3], calculos[4], calculos[5]);
     
     // Guarda dados iniciais para animação
     aceleracaoAtualParaAnimacao = calculos[4];
+
+    var velocidadeTexto = "V = 0.0 m/s";
+    App.strategiesTela.construtorTexto.executa([
+      "3",
+      velocidadeTexto,
+      "#FFF",
+      "Bold 20px Trebuchet MS",
+      100,
+      380
+    ]);
   }
 
-  var reescreve = function(angulo, p, px, py, n, a){
+  var reescreve = function(angulo, p, px, py, n, a, fAtrito){
 
     // Guarda para a animação
     anguloRadAtualParaAnimacao = (angulo*CENTO_OITENTA)/180;
@@ -339,7 +360,7 @@ App.aplicacoes = (function ()
       "#FFF",
       "Bold 16px Trebuchet MS",
       objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)*15) - 20,
-      170
+      160
     ]);
 
     mensagem = p + " N";
@@ -349,7 +370,7 @@ App.aplicacoes = (function ()
       "#FFF",
       "Bold 16px Trebuchet MS",
       objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)*5) - 20,
-      220
+      210
     ]);
 
     mensagem = px + " N";
@@ -359,7 +380,7 @@ App.aplicacoes = (function ()
       "#FFF",
       "Bold 16px Trebuchet MS",
       objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)*12) - 20,
-      245
+      235
     ]);
 
     mensagem = py + " N";
@@ -369,7 +390,7 @@ App.aplicacoes = (function ()
       "#FFF",
       "Bold 16px Trebuchet MS",
       objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)*12) - 20,
-      270
+      260
     ]);
 
     mensagem = n + " N";
@@ -379,18 +400,28 @@ App.aplicacoes = (function ()
       "#FFF",
       "Bold 16px Trebuchet MS",
       objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)*6) - 20,
-      295
+      285
     ]);
 
     mensagem = a + " m/s²";
     App.strategiesTela.construtorTexto.executa([
       "1",
       mensagem,
-      "#FFFS",
+      "#FFF",
       "Bold 16px Trebuchet MS",
       objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)*5) + 170,
-      295
+      285
     ]);
+
+    mensagem = fAtrito + " N";
+      App.strategiesTela.construtorTexto.executa([
+        "1",
+        mensagem,
+        "#FFF",
+        "Bold 16px Trebuchet MS",
+        objCanvas.canvasWidth/2 + objCanvas.canvasWidth/22 + ((BASE/18)*6) - 7,
+        310
+      ]);
   }
 
   //Recebe as coordenadas para calcular o novo ponto
@@ -607,20 +638,23 @@ App.aplicacoes = (function ()
       Aceleração da Gravidade: 9,8m/s2.
       Sem atrito.
      */
+      var coeficienteAtrito = 0.01;
       var massa = 10.0;
       var g = 9.8;
       var p = massa * g;
       var px = p * Math.sin(angFinal);
       var py = p * Math.cos(angFinal);
       var n = py;
-      var a = px/massa;
+      var fAtrito = py * coeficienteAtrito;
+      var a = g * (Math.sin(angFinal) - (coeficienteAtrito * Math.cos(angFinal)));
+
       // parseFloat define quantas casas decimais são exibidas
-      return [parseFloat(p).toFixed(1), parseFloat(px).toFixed(1), parseFloat(py).toFixed(1), parseFloat(n).toFixed(1), parseFloat(a).toFixed(1)];
+      return [parseFloat(p).toFixed(1), parseFloat(px).toFixed(1), parseFloat(py).toFixed(1), parseFloat(n).toFixed(1), parseFloat(a).toFixed(1), parseFloat(fAtrito).toFixed(1)];
 
   }
 
   // Calcula o deslocamento na diagonal, e a partir dele a variação das coordenadas do ponto (X, Y)
-  var calculaPosicaoNoTempo = function(seno, cosseno){
+  var calculaPosicaoEVelocidadeNoTempo = function(seno, cosseno){
     if(initialTime == null || initialTime == "undefined"){ // não esquecer de limpar ao parar a animação!
       initialTime = Date.now();    
     }    
@@ -643,7 +677,9 @@ App.aplicacoes = (function ()
     var ca = cosseno * (S * 3779.527559); // Somar à coordenada X dos pontos para redesenhar
     var co = seno * (S * 3779.527559); // Somar à coordenada Y dos pontos para redesenhar
     
-    return [ca, co];
+    var velocidade = 0 + (aceleracaoAtualParaAnimacao * t);
+
+    return [ca, co, velocidade.toFixed(2)];
   }
 
   var animarBloco = function (){
@@ -666,13 +702,13 @@ App.aplicacoes = (function ()
     var senoAngulo = Math.sin(anguloRadAtualParaAnimacao);
     var cossenoAngulo = Math.cos(anguloRadAtualParaAnimacao);
 
-    var deslocamento = calculaPosicaoNoTempo(senoAngulo, cossenoAngulo);
+    var deslocamentoEVelocidade = calculaPosicaoEVelocidadeNoTempo(senoAngulo, cossenoAngulo);
     // Mover lógica toda de calculo das coordenadas para os desenhos do redesenha, incluindo calculo dos pontos, para um método
     // A referência sempre será os pontos originais iniciais, e o deslocamento é que será maior a cada iteração
-    var pontoA1 = [pontoA[0] + deslocamento[0], pontoA[1] + deslocamento[1]];
-    var pontoB1 = [pontoB[0] + deslocamento[0], pontoB[1] + deslocamento[1]];
-    var pontoC1 = [pontoC[0] + deslocamento[0], pontoC[1] + deslocamento[1]];
-    var pontoD1 = [pontoD[0] + deslocamento[0], pontoD[1] + deslocamento[1]];
+    var pontoA1 = [pontoA[0] + deslocamentoEVelocidade[0], pontoA[1] + deslocamentoEVelocidade[1]];
+    var pontoB1 = [pontoB[0] + deslocamentoEVelocidade[0], pontoB[1] + deslocamentoEVelocidade[1]];
+    var pontoC1 = [pontoC[0] + deslocamentoEVelocidade[0], pontoC[1] + deslocamentoEVelocidade[1]];
+    var pontoD1 = [pontoD[0] + deslocamentoEVelocidade[0], pontoD[1] + deslocamentoEVelocidade[1]];
     
     // limpa o corpo todo
     //limpeza inicial da tela, para reconstrução // Criar um canvas só para o bloco! QUw só ficará em primeiro plano nessa tela
@@ -689,6 +725,16 @@ App.aplicacoes = (function ()
 
     // Desenha as forças
     desenhaForcas(anguloRadAtualParaAnimacaoCorrigido, pontoA1, pontoC1, BASE_Px, BASE_Py);
+
+    var velocidadeTexto = "V = " + deslocamentoEVelocidade[2] + " m/s";
+    App.strategiesTela.construtorTexto.executa([
+      "3",
+      velocidadeTexto,
+      "#FFF",
+      "Bold 20px Trebuchet MS",
+      100,
+      380
+    ]);
 
     // Solicita a próxima animação somente enquanto o bloco estiver no limite do plano inclinado
     var parar = pontoA1[1] >= Y_ZERO + 150 || pontoA1[0] >= X_ZERO + 200;
@@ -727,6 +773,16 @@ App.aplicacoes = (function ()
 
     // Desenha as forças
     desenhaForcas(anguloRadAtualParaAnimacaoCorrigido, pontoA, pontoC, BASE_Px, BASE_Py);
+
+    var velocidadeTexto = "V = 0.0 m/s";
+    App.strategiesTela.construtorTexto.executa([
+      "3",
+      velocidadeTexto,
+      "#FFF",
+      "Bold 20px Trebuchet MS",
+      100,
+      380
+    ]);
 
     document.getElementById("animar").disabled = false;
     document.getElementById("voltar").disabled = true;
@@ -812,7 +868,17 @@ App.aplicacoes = (function ()
       var ponto = App.strategiesCalculadora.ponto.calcula([angRad, X_ZERO, Y_ZERO, BASE]);
       reDesenha(ponto[0], ponto[1], angRad);
       // linha a seguir determina quantas variáveis calculadas podem ficar visíveis na tela  
-      reescreve(angFinal-180, calculos[0], calculos[1], calculos[2], calculos[3], calculos[4]);
+      reescreve(angFinal-180, calculos[0], calculos[1], calculos[2], calculos[3], calculos[4], calculos[5]);
+
+      var velocidadeTexto = "V = 0.0 m/s";
+      App.strategiesTela.construtorTexto.executa([
+        "3",
+        velocidadeTexto,
+        "#FFF",
+        "Bold 20px Trebuchet MS",
+        100,
+        380
+      ]);
 
       anguloRadAtualParaAnimacaoCorrigido = angRad;
     });
