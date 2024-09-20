@@ -123,48 +123,61 @@ App.espelho = (function ()
       "#0fc",
       "Bold 32px Trebuchet MS",
       135,
-      120
+      100
     ]);
 
-    mensagem = "Utilize os botões abaixo para";
+    mensagem = "Utilize os botões abaixo para interagir";
     App.strategiesTela.construtorTexto.executa([
       "2",
       mensagem,
       "#0fc",
-      "Bold 20px Trebuchet MS",
-      120,
-      195
+      "Bold 18px Trebuchet MS",
+      95,
+      135
     ]);
 
-    mensagem = "para interagir e observar o"; 
+    mensagem = "e observar o comportamento da luz"; 
     App.strategiesTela.construtorTexto.executa([
       "2",
       mensagem,
       "#0fc",
-      "Bold 20px Trebuchet MS",
-      127,
-      225
-    ]);
-
-    mensagem = "comportamento da luz refletida"; 
-    App.strategiesTela.construtorTexto.executa([
-      "2",
-      mensagem,
-      "#0fc",
-      "Bold 20px Trebuchet MS",
+      "Bold 18px Trebuchet MS",
       105,
-      255
+      160
     ]);
 
-    mensagem = "no espelho."; 
+    mensagem = "refletida no espelho."; 
+    App.strategiesTela.construtorTexto.executa([
+      "2",
+      mensagem,
+      "#0fc",
+      "Bold 18px Trebuchet MS",
+      165,
+      185
+    ]);
+
+
+    mensagem = "Observe que o ângulo de Incidência";
     App.strategiesTela.construtorTexto.executa([
       "2",
       mensagem,
       "#0fc",
       "Bold 20px Trebuchet MS",
-      195,
-      285
+      90,
+      245
     ]);
+
+    //mensagem = "Observe que o ângulo de Incidência é";
+    mensagem = "é igual ao ângulo de Reflexão.";
+    App.strategiesTela.construtorTexto.executa([
+      "2",
+      mensagem,
+      "#0fc",
+      "Bold 20px Trebuchet MS",
+      115,
+      275
+    ]);
+
 
 
     // Lanterna na posição certa, mais primeiro feixe de luz
