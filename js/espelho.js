@@ -157,24 +157,24 @@ App.espelho = (function ()
     ]);
 
 
-    mensagem = "Observe que o ângulo de Incidência";
+    mensagem = "Observe que o ângulo de Incidência i";
     App.strategiesTela.construtorTexto.executa([
       "2",
       mensagem,
       "#0fc",
       "Bold 20px Trebuchet MS",
-      90,
+      85,
       245
     ]);
 
     //mensagem = "Observe que o ângulo de Incidência é";
-    mensagem = "é igual ao ângulo de Reflexão.";
+    mensagem = "é igual ao ângulo de Reflexão r.";
     App.strategiesTela.construtorTexto.executa([
       "2",
       mensagem,
       "#0fc",
       "Bold 20px Trebuchet MS",
-      115,
+      110,
       275
     ]);
 
@@ -235,6 +235,89 @@ App.espelho = (function ()
 
     ctx.clearRect(0, 0, w_canvas, h_canvas)
     
+    var pxArco = xMax;
+    var pyArco = y;
+    var raio = xMax - 150;
+    var new_posRad = (Math.PI/180) * new_pos
+
+
+// -------------------------------------------------------------------
+// -------------------------------------------------------------------
+// Desenhando arcos para os ângulos de Incidência e Reflexão
+
+// Valor de correção para manter o ângulo numa posição horizontal ok
+var correcaoXPosicao = function(){
+      
+  if(new_pos > 20)
+    return new_pos / 1.1;
+  else if(new_pos > 18)
+    return new_pos;
+  else if(new_pos > 15)
+    return new_pos * 1.1;
+  else if(new_pos > 13)
+    return new_pos * 1.2;
+  else if(new_pos > 11)
+    return new_pos * 1.4;
+  else if(new_pos == 11)
+    return new_pos * 1.6;
+  else if(new_pos == 10)
+    return new_pos * 1.8;
+  else if(new_pos == 9)
+    return new_pos * 2;
+  else if(new_pos == 8)
+    return new_pos * 2.2;
+  else if(new_pos == 7)
+    return new_pos * 2.5;
+  else if(new_pos == 6)
+    return new_pos * 3;
+  else if(new_pos == 5)
+    return new_pos * 3.5;
+  else if(new_pos == 4)
+    return new_pos * 4;
+  return new_pos * 5;
+} 
+
+// Valor de correção para manter o "r" numa altura ok
+var correcaoYPosicao = new_pos > 12 ? new_pos * 1.5 : new_pos > 8 ? new_pos * 1.2 : new_pos;
+
+//--------------------------------------------------------------------
+// --- Bloco que desenha arco referente ao ângulo de Reflexão r
+    ctx.beginPath();
+    ctx.lineWidth = 2;
+    ctx.setLineDash([1,1]);
+    ctx.strokeStyle = "#F00";//cor;
+    //--->arc(x, y, raio, ângulo inicial, ângulo final, sentido)
+    ctx.arc(pxArco, pyArco, raio, Math.PI, Math.PI + new_posRad, false);
+    ctx.stroke();
+    ctx.closePath();
+//--------------------------------------------------------------------
+//--------------------------------------------------------------------
+// --- Bloco que desenha arco referente ao ângulo de Incidência i
+    ctx.beginPath();
+    ctx.lineWidth = 2;
+    ctx.setLineDash([1,1]);
+    ctx.strokeStyle = "#F00";//cor;
+    //--->arc(x, y, raio, ângulo inicial, ângulo final, sentido)
+    ctx.arc(pxArco, pyArco, raio, Math.PI, Math.PI - new_posRad, true);
+    ctx.stroke();
+    ctx.closePath(); 
+//--------------------------------------------------------------------
+//--------------------------------------------------------------------
+// Escreve r e i       
+  var tamanhoLetra = new_pos > 6 ? 18 : new_pos * 3;
+  var fonte =  "Bold " + tamanhoLetra + "px Trebuchet MS";
+  ctx.beginPath();
+  ctx.font = fonte;
+  ctx.fillStyle = "#F00";
+ // ctx.fillText("r", pxArco - 205 + correcaoXPosicao(), pyArco -  correcaoYPosicao);
+ // ctx.fillText("i", pxArco - 205 + correcaoXPosicao(), pyArco +  correcaoYPosicao + tamanhoLetra/2 );
+ ctx.fillText("r", pxArco - 220 + correcaoXPosicao(), pyArco -  correcaoYPosicao);
+  ctx.fillText("i", pxArco - 220 + correcaoXPosicao(), pyArco +  correcaoYPosicao + tamanhoLetra/2 );
+  ctx.fill(); 
+  ctx.closePath();
+//--------------------------------------------------------------------
+
+// Desenhando linhas retas do feixe e referência
     if(!isStart){
       axis(y);
       ctx.strokeStyle = '#0CF'
@@ -246,10 +329,10 @@ App.espelho = (function ()
       ctx.lineTo(ponto2[0], ponto2[1])
       ctx.stroke()
     }
-    
+
     images(flash_light, 75 - (new_pos/1000), 318 - (new_pos/2.2), angCorrigidoGraus);
     anguloTexto = "Ângulo: " + new_pos + "°";
-    document.getElementById("pos-y").value = anguloTexto;
+    document.getElementById("pos-y").value = anguloTexto;    
   }
 
   function images(img, x, y, degrees) {      
