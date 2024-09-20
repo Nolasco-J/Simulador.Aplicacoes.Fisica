@@ -282,8 +282,10 @@ var correcaoXPosicao = function(){
   return new_pos * 5;
 } 
 
-// Valor de correção para manter o "r" numa altura ok
+// Valor de correção para manter o "r" e o "i" numa altura ok
 var correcaoYPosicao = new_pos > 12 ? new_pos * 1.5 : new_pos > 8 ? new_pos * 1.2 : new_pos;
+// Valor de correção para manter o "r" numa altura ok
+var correcaoYPosicaoMaiorQue36 = 36 * 1.5;
 
 //--------------------------------------------------------------------
 // --- Bloco que desenha arco referente ao ângulo de Reflexão r
@@ -314,7 +316,7 @@ var correcaoYPosicao = new_pos > 12 ? new_pos * 1.5 : new_pos > 8 ? new_pos * 1.
   ctx.beginPath();
   ctx.font = fonte;
   ctx.fillStyle = "#F00";
-  ctx.fillText("r", pxArco - 220 + correcaoXPosicao(), pyArco -  correcaoYPosicao);
+  ctx.fillText("r", pxArco - 220 + correcaoXPosicao(), (new_pos > 36 ? 19.3 : pyArco - correcaoYPosicao));
   ctx.fillText("i", pxArco - 220 + correcaoXPosicao(), pyArco +  correcaoYPosicao + tamanhoLetra/2 );
   ctx.fill(); 
   ctx.font = "Bold 15px Trebuchet MS";
