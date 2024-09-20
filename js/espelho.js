@@ -178,7 +178,12 @@ App.espelho = (function ()
       275
     ]);
 
-
+    ctx.beginPath();
+    ctx.font = "Bold 15px Trebuchet MS";
+    ctx.fillStyle = "#F00";    
+    ctx.fillText("N", xMax - 350, 318 - 22 );
+    ctx.fill(); 
+    ctx.closePath();
 
     // Lanterna na posição certa, mais primeiro feixe de luz
     images(flash_light, 75, 318, 0);
@@ -303,16 +308,17 @@ var correcaoYPosicao = new_pos > 12 ? new_pos * 1.5 : new_pos > 8 ? new_pos * 1.
     ctx.closePath(); 
 //--------------------------------------------------------------------
 //--------------------------------------------------------------------
-// Escreve r e i       
+// Escreve r, i e N      
   var tamanhoLetra = new_pos > 6 ? 18 : new_pos * 3;
   var fonte =  "Bold " + tamanhoLetra + "px Trebuchet MS";
   ctx.beginPath();
   ctx.font = fonte;
   ctx.fillStyle = "#F00";
- // ctx.fillText("r", pxArco - 205 + correcaoXPosicao(), pyArco -  correcaoYPosicao);
- // ctx.fillText("i", pxArco - 205 + correcaoXPosicao(), pyArco +  correcaoYPosicao + tamanhoLetra/2 );
- ctx.fillText("r", pxArco - 220 + correcaoXPosicao(), pyArco -  correcaoYPosicao);
+  ctx.fillText("r", pxArco - 220 + correcaoXPosicao(), pyArco -  correcaoYPosicao);
   ctx.fillText("i", pxArco - 220 + correcaoXPosicao(), pyArco +  correcaoYPosicao + tamanhoLetra/2 );
+  ctx.fill(); 
+  ctx.font = "Bold 15px Trebuchet MS";
+  ctx.fillText("N", pxArco - 350, pyArco - 5 );
   ctx.fill(); 
   ctx.closePath();
 //--------------------------------------------------------------------
