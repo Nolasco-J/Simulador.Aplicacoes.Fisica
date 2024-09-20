@@ -78,7 +78,6 @@ div.divCanvas{
 	height:490px;
 	padding: 0px;
 	background-color: transparent;
-	margin-top: -50px;
 	border: 0;
 	position: absolute;
 
@@ -108,21 +107,90 @@ div.divControles-ng{
 	background-color: transparent;
 	border: 0;
 }
+
 .menu{
+	list-style:none;
 	width: 1000px;
-	height: 50px;
+	height: auto;
 	border-width: 0px;
 	margin: auto;
-	margin-top: -10px !important;
+	margin-top: 0px !important;
 	padding: 0 !important;
 	clear: both;
 	text-align: center;
 	background-color: transparent;
-	bottom: 0;
-	border: 0;
-	position: absolute;
-	z-index: 5 !important;
+	position: relative;
+	z-index: 150 !important;
+	font-size: 16px;
+	font-family: Arial, Helvetica, sans-serif;
 }
+
+.menu ul {
+	margin: auto !important;
+	margin-top: 0px !important;
+	display: inline-block;	
+	padding: 0px !important;
+}
+
+.menu li{
+	position:relative;
+	float:left;
+	background:#006;
+	color: rgb(205, 221, 221);
+	text-decoration:none; 
+	padding:5px 5px; 
+	display:block;
+	width: 170px;	
+	margin-top: 0px;
+	margin-bottom: 0px;
+	margin-left: 5px;
+	margin-right: 5px;
+	border-radius: 8px;
+	border: 0.5px solid #bee1f5;
+	cursor: pointer;
+}
+
+.menu li:hover{
+	background:rgb(3, 3, 63);
+	color:#fff;
+	font-size: 18px;
+}
+
+.menu li ul{
+	position:relative;
+	top:5px;
+	left:0;
+	background-color:rgb(3, 3, 63);
+	background-color:transparent !important;
+	display:none;
+}
+
+.menu li:hover ul{
+	display:block;
+	height: auto;
+}
+
+.menu li ul li{
+	border-top:0.5px solid #bee1f5 !important;
+	border-right:0px !important;
+	border-left:0px !important;
+	display:block;
+	padding:10px 0px;
+	position:relative; 
+	background:rgb(3, 3, 63);
+	width: 100%;
+	font-size: 16px;
+	margin-left: 0px !important;
+}
+
+.menu li ul li:hover{
+	background:#006;
+	font-size: 18px;
+}
+
+
+
+
 button.menuButton{
 	display: inline-block;
 	text-align: center;
