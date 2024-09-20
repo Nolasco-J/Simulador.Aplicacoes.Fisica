@@ -66,16 +66,25 @@
 					</form>				
 				</div>
 			</div>	 		
-			 <div id="menu" class="menu">
-				<!--Botões do menu principal-->				
-				<button class="menuButton" onclick="App.ciclo.inicio()"><p>Ciclo</p></button>
-				<button class="menuButton" onclick="App.graficos.inicio();"><p>Gráficos</p></button>		
-				<button class="menuButton" onclick="App.teoria.inicio();"><p>Teoria</p></button>		
-				<button class="menuButton" onclick="App.sdTrigonometria.inicio();"><p>Sequência Didática</p></button>				
-				<button class="menuButton" onclick="App.aplicacoes.inicio();"><p>Plano Inclinado</p></button>
-				<button class="menuButton" onclick="App.espelho.inicio();"><p>Reflexão da Luz</p></button>
-				<button class="menuButton" onclick="App.creditos.inicio();"><p>Créditos</p></button>
-				<button class="menuButton" onclick="App.principal.inicio();"><p>Início</p></button>
+			 <div id="menu" class="menu" style="z-index: 150;">
+				<ul >
+					<li onclick="App.principal.inicio();">HOME</li>
+					<li>TRIGONOMETRIA
+						<ul>
+							<li onclick="App.ciclo.inicio();">CICLO</li>
+							<li onclick="App.graficos.inicio();">GRÁFICOS</li>
+							<li onclick="App.teoria.inicio();">TEORIA</li>
+							<li onclick="App.sdTrigonometria.inicio();">SEQUÊNCIA DIDÁTICA</li>
+						</ul>
+					</li>
+					<li>FÍSICA
+						<ul>
+							<li onclick="App.aplicacoes.inicio();">PLANO INCLINADO</li>
+							<li onclick="App.espelho.inicio();">REFLEXÃO DA LUX</li>
+						</ul>
+					</li>
+					<li onclick="App.creditos.inicio();">CRÉDITOS</li>
+			</ul>
 				
 			 </div>
 	 	</div> 		
