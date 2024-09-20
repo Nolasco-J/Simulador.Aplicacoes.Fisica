@@ -68,7 +68,27 @@ App.creditos = (function ()
       objCanvas.canvasHeight - 5
     ]);
 
-    mensagem = "Algumas imagens utilizadas foram retiradas de bancos de imagens";
+     // Fundo azul
+    App.strategiesTela.construtorCorFundo.executa([
+      "2",
+      "#006",
+      100,
+      45,
+      objCanvas.canvasWidth - 200,
+      350
+    ]);
+
+    mensagem = "Desenvolvido por Nolasco em coautoria de seu orientador, como";
+    App.strategiesTela.construtorTexto.executa([
+      "1",
+      mensagem,
+      "#fff",
+      "22px Arial",
+      objCanvas.canvasWidth/2 - (objCanvas.canvasWidth/3) + 20,
+      80
+    ]);
+
+    mensagem = "Produto Educacional do Programa de Mestrado Profissional em";
     App.strategiesTela.construtorTexto.executa([
       "1",
       mensagem,
@@ -78,6 +98,26 @@ App.creditos = (function ()
       110
     ]);
 
+    mensagem = "Ensino de Ciências e Matemática - ENCIMA-IFSP.";
+    App.strategiesTela.construtorTexto.executa([
+      "1",
+      mensagem,
+      "#fff",
+      "22px Arial",
+      objCanvas.canvasWidth/2 - (objCanvas.canvasWidth/3) + 20,
+      140
+    ]);
+
+    mensagem = "Algumas imagens utilizadas foram retiradas de bancos de imagens";
+    App.strategiesTela.construtorTexto.executa([
+      "1",
+      mensagem,
+      "#fff",
+      "22px Arial",
+      objCanvas.canvasWidth/2 - (objCanvas.canvasWidth/3) + 20,
+      200
+    ]);
+
     mensagem = "gratuitas, que requerem apenas atribuição para uso livre.";
     App.strategiesTela.construtorTexto.executa([
       "1",
@@ -85,37 +125,37 @@ App.creditos = (function ()
       "#fff",
       "22px Arial",
       objCanvas.canvasWidth/2 - (objCanvas.canvasWidth/3) + 18,
-      150
+      230
     ]);
 
-    mensagem = "Abaixo, as referências das fontes, com link.";
+    mensagem = "Abaixo, as referências das fontes, com link:";
     App.strategiesTela.construtorTexto.executa([
       "1",
       mensagem,
       "#fff",
       "22px Arial",
       objCanvas.canvasWidth/2 - (objCanvas.canvasWidth/3) + 15,
-      190
+      260
     ]);
 
-    mensagem = "Imagem background da página";
+    mensagem = "- Imagem background da página";
     App.strategiesTela.construtorTexto.executa([
       "1",
       mensagem,
-      "#fff",
+      "#9f9",
       "20px Arial",
       objCanvas.canvasWidth/2 - (objCanvas.canvasWidth/3) + 189,
-      250
+      290
     ]);
 
-    mensagem = "Imagem de fundo do canvas";
+    mensagem = "- Imagem de fundo do canvas";
     App.strategiesTela.construtorTexto.executa([
       "1",
       mensagem,
-      "#fff",
+      "#9f9",
       "20px Arial",
       objCanvas.canvasWidth/2 - (objCanvas.canvasWidth/3) + 200,
-      280
+      320
     ]);
 
     mensagem = "Demais imagens, foram construídas pelo próprio desenvolvedor";
@@ -173,19 +213,20 @@ App.creditos = (function ()
           - Math.floor(posicaoOffset.top) + 1;
 
       //Primeiro Link - backgroung
+
       if(x >= objCanvas.canvasWidth/2 - (objCanvas.canvasWidth/3) + 189
-        && x <= objCanvas.canvasWidth/2 - (objCanvas.canvasWidth/3) + 465
-        && y >= 235
-        && y <= 250)
+        && x <= objCanvas.canvasWidth/2 - (objCanvas.canvasWidth/3) + 480
+        && y >= 270
+        && y <= 295)
       {
         // window.location.href = linkBackground;
         window.open(linkBackground,'_blank');
       }
       //Botão 45°
       else if(x >= objCanvas.canvasWidth/2 - (objCanvas.canvasWidth/3) + 200
-        && x <= objCanvas.canvasWidth/2 - (objCanvas.canvasWidth/3) + 455
-        && y >= 260
-        && y <= 280)
+        && x <= objCanvas.canvasWidth/2 - (objCanvas.canvasWidth/3) + 470
+        && y >= 300
+        && y <= 320)
       {
         // window.location.href = linkFrame;
         window.open(linkFrame,'_blank');
